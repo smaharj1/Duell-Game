@@ -8,7 +8,7 @@ using namespace std;
 class Dice
 {
 public:
-	Dice();
+	Dice(string given);
 	~Dice();
 
 	void moveLeft();
@@ -23,11 +23,12 @@ public:
 	int getRight();
 
 private:
-	string diceValue;
+	char player;
 	int top;
 	int right;
+	int front;
 
-	const int topIndex = 1;
-	const int rightIndex = 2;
+	const int DICE_FRONT = 3;
+
 };
 

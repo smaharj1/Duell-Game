@@ -1,16 +1,18 @@
 #include<iostream>
 #include"Dice.h"
+#include"Board.h"
 
 using namespace std;
 
 int main() {
 	cout << "Hello world" << endl;
 
-	Dice *  d = new Dice();
+	Dice *  d = new Dice("C51");
 	d->setValue("C51");
 
-	cout << d->getValue() << endl;
-	cout << d->getTop() << "  " << d->getRight() << endl;
+	Board b = Board();
+
+	b.printBoard();
 
 	system("pause");
 }
