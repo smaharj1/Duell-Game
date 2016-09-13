@@ -13,6 +13,7 @@ public:
 	bool isEmpty();
 
 	Dice * getDice();
+	void removeDice();
 
 private:
 	Dice * dice;

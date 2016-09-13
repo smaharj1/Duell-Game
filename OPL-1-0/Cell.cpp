@@ -30,3 +30,7 @@ bool Cell::isEmpty() {
 Dice * Cell::getDice() {
 	return dice;
 }
+
+void Cell::removeDice() {
+	dice = NULL;
+}

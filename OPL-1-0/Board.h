@@ -10,7 +10,7 @@ public:
 	~Board();
 
 	void printBoard();
-	
+	bool move(int x, int y, int frontal, int side);
 
 private:
 	Cell * board[8][9];

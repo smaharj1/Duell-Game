@@ -14,5 +14,10 @@ int main() {
 
 	b.printBoard();
 
+	cout << endl << endl;
+
+	b.move(8, 1, 2, 0);
+	b.printBoard();
+	
 	system("pause");
 }

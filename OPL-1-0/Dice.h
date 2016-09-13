@@ -21,6 +21,7 @@ public:
 
 	int getTop();
 	int getRight();
+	static string generateDice(bool isComputer);
 
 private:
 	char player;

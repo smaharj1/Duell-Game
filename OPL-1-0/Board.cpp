@@ -12,7 +12,7 @@ Board::Board()
 				board[i][j] = new Cell(d);
 			}
 			else if (i == ROWS - 1) {
-				d = new Dice("H65");
+				d = new Dice("H12");
 				board[i][j] = new Cell(d);
 			}
 			else {
@@ -40,4 +40,26 @@ void Board::printBoard() {
 		}
 		cout << endl;
 	}
+}
+
+bool Board::move(int x, int y, int frontal, int side) {
+	if (board[x - 1][y - 1]->isEmpty()) {
+		return false;
+	}
+
+	// check for over or under the limit of row and column.
+
+	for (int i = 0; i < frontal; i++) {
+		board[x - 1][y - 1]->getDice()->moveForward();
+	}
+
+	for (int i = 0; i < side; i++) {
+		board[x - 1][y - 1]->getDice()->moveRight();
+	}
+
+	int newX = x - 1 - frontal;
+	int newY = y - 1 - side;
+
+	board[newX][newY]->addDice(board[x - 1][y - 1]->getDice());
+	board[x - 1][y - 1]->removeDice();
 }
