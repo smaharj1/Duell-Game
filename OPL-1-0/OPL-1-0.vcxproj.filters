@@ -24,12 +24,48 @@
     <ClCompile Include="Board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="human.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="computer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tournament.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="human.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="computer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tournament.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
