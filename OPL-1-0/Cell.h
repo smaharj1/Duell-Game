@@ -9,7 +9,7 @@ public:
 	~Cell();
 	Cell(Dice * d);
 
-	bool addDice(Dice * givenDice);
+	void addDice(Dice * givenDice);
 	bool isEmpty();
 
 	Dice * getDice();

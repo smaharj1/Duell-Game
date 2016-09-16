@@ -14,7 +14,11 @@ Dice::~Dice()
 }
 
 string Dice::getValue() {
-	return player + to_string(getTop()) + to_string(getRight());
+	if (isComputer) {
+		return "C" + to_string(getTop()) + to_string(getRight());
+	}
+
+	return "H" + to_string(getTop()) + to_string(getRight());
 }
 
 void Dice::moveLeft() {
@@ -42,7 +46,7 @@ void Dice::moveForward() {
 }
 
 void Dice::setValue(string val) {
-	player = val.at(0);
+	isComputer = val.at(0) == 'C' ? true : false;
 	top = val.at(1)-'0';
 	right = val.at(2) - '0';
 	front = DICE_FRONT;
@@ -54,4 +58,8 @@ int Dice::getTop() {
 
 int Dice::getRight() {
 	return right;
+}
+
+bool Dice::isPlayerComputer() {
+	return isComputer;
 }

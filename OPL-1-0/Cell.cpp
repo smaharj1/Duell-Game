@@ -14,13 +14,8 @@ Cell::~Cell()
 {
 }
 
-bool Cell::addDice(Dice * givenDice) {
-	if (dice == NULL) {
-		dice = givenDice;
-		return true;
-	}
-
-	return false;
+void Cell::addDice(Dice * givenDice) {
+	dice = givenDice;
 }
 
 bool Cell::isEmpty() {

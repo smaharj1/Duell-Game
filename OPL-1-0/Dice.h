@@ -23,8 +23,10 @@ public:
 	int getRight();
 	static string generateDice(bool isComputer);
 
+	bool isPlayerComputer();
+
 private:
-	char player;
+	bool isComputer;
 	int top;
 	int right;
 	int front;

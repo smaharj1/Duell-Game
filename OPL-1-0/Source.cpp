@@ -16,8 +16,11 @@ int main() {
 
 	cout << endl << endl;
 
-	b.move(8, 1, 2, 0);
+	b.move(8, 1 , 2, 0 );
 	b.printBoard();
 	
+	b.move(6, 1, 0, 9);
+	b.printBoard();
+
 	system("pause");
 }
