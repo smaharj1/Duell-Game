@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="algorithm.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="boardView.cpp" />
     <ClCompile Include="Cell.cpp" />

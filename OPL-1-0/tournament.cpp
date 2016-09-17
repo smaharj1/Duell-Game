@@ -23,14 +23,14 @@ void tournament::startGame() {
 	char userInput;
 	cout << "Do you want to start a new game (Y/N)? :: " << endl;
 	cin >> userInput;
-	game newGame;
+	game * newGame;
 
 	while (userInput == 'Y' || userInput == 'y') {
 		totalGames++;
-		newGame = game();
-		newGame.startGame();
+		newGame = new game();
+		newGame->startGame();
 
-		if (newGame.isComputerWinner()) {
+		if (newGame->isComputerWinner()) {
 			computerScore++;		
 		}
 		else humanScore++;

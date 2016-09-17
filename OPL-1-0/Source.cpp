@@ -1,26 +1,17 @@
 #include<iostream>
 #include"Dice.h"
 #include"Board.h"
+#include "tournament.h"
 
 using namespace std;
 
 int main() {
 	cout << "Hello world" << endl;
 
-	Dice *  d = new Dice("C51");
-	d->setValue("C51");
+	tournament t;
 
-	Board b = Board();
-
-	b.printBoard();
-
-	cout << endl << endl;
-
-	b.move(8, 1 , 2, 0 );
-	b.printBoard();
-	
-	b.move(6, 1, 0, 9);
-	b.printBoard();
+	t.printWelcomeMessage();
+	t.startGame();
 
 	system("pause");
 }

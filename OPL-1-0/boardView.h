@@ -1,8 +1,20 @@
 #pragma once
-class boardView
+#include<iostream>
+#include"Board.h"
+
+class BoardView
 {
 public:
-	boardView();
-	~boardView();
+	BoardView();
+	~BoardView();
+
+	void setBoard(Board * b) {
+		board = b;
+	}
+
+	void printBoard();
+
+private:
+	Board * board;
 };
 
