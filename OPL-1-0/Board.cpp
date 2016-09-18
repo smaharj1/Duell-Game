@@ -12,7 +12,7 @@ Board::Board()
 				board[i][j] = new Cell(d);
 			}
 			else if (i == ROWS - 1) {
-				d = new Dice("H12");
+				d = new Dice("H51");
 				board[i][j] = new Cell(d);
 			}
 			else {
@@ -27,7 +27,9 @@ Board::~Board()
 {
 }
 
-bool Board::move(int row, int column, int frontal, int side) {
+Dice * Board::move(int row, int column, int newRow, int newCol) {
+	Dice * diceAte = NULL;
+
 	// Holds if the player is computer or human.
 	bool isComputer = board[row-1][column-1]->getDice()->isPlayerComputer();
 
@@ -36,51 +38,13 @@ bool Board::move(int row, int column, int frontal, int side) {
 		cout << "The selection is empty." << endl;
 		return false;
 	}
+
+	int frontal = newRow - row;
+	int side = newCol - column;
 	
-	// Coordinates that hold the new X and Y positions according to the players
-	int newX = -1;
-	int newY = -1;
-	
-	// If it is computer's move, then arrange the coordinates accordingly.
-	if (isComputer) {
-		// Check if it is outside of range of the board.
-		if (frontal + row > ROW_HIGH_LIMIT || frontal + row < ROW_LOW_LIMIT ||
-			column -side > 9 ||  column -side < 1) {
-			cout << "Invalid move. It is outside the board" << endl;
-			return false;
-		}
-
-		// Calculates the new position.
-		newX = row - 1 + frontal;
-		newY = column - 1 - side;
-
-		// If the new location is not empty, and it is of the same player, return error.
-		if (!board[newX][newY]->isEmpty() && board[newX][newY]->getDice()->isPlayerComputer()) {
-			cout << "Illegal move. You tried replacing your own player" << endl;
-			return false;
-		}
-	}
-	else {
-		// If it is human, find its new coordinates.
-		if (row - frontal > ROW_HIGH_LIMIT || row - frontal < ROW_LOW_LIMIT ||
-			column + side > COLUMN_HIGH_LIMIT || column + side < COLUMN_LOW_LIMIT) {
-			cout << "Invalid move. It is outside the board" << endl;
-			return false;
-		}
-		// Calculates the new position.
-		newX = row - 1 - frontal;
-		newY = column - 1 + side;
-
-		// If the new location is not empty, and it is of the same player, return error.
-		if (!board[newX][newY]->isEmpty() && !board[newX][newY]->getDice()->isPlayerComputer()) {
-			cout << "Illegal move. You tried replacing your own player" << endl;
-			return false;
-		}
-	}
-
 	// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
 	for (int i = 0; i < abs(frontal); i++) {
-		frontal >0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+		frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
 			board[row - 1][column - 1]->getDice()->moveBackward();
 	}
 
@@ -91,14 +55,32 @@ bool Board::move(int row, int column, int frontal, int side) {
 	}
 
 	// Adds the dice to the Cell and removes the dice from previous location.
-	board[newX][newY]->addDice(board[row - 1][column - 1]->getDice());
+
+	if (!board[newRow - 1][newCol - 1]->isEmpty()) {
+		cout << "Dice is eaten!" << endl << endl;
+		diceAte = board[newRow - 1][newCol - 1]->getDice();
+		board[newRow - 1][newCol - 1]->removeDice();
+	}
+	board[newRow-1][newCol-1]->addDice(board[row - 1][column - 1]->getDice());
 	board[row - 1][column - 1]->removeDice();
 
-	return true;
+	return diceAte;
 }
 
 
-bool Board::isLegal(int row, int column, int frontal, int side, bool playerIsComputer) {
+bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsComputer) {
+	if (row < ROW_LOW_LIMIT || newRow < ROW_LOW_LIMIT || column < COLUMN_LOW_LIMIT || newCol < COLUMN_LOW_LIMIT ||
+		row > ROW_HIGH_LIMIT || newRow > ROW_HIGH_LIMIT || column > COLUMN_HIGH_LIMIT || newCol > COLUMN_HIGH_LIMIT) {
+		cout << "Coordinates is out of bound. Please enter again." << endl << endl;
+		return false;
+	}
+	
+	// If the cell in the board is empty, return that it is empty.
+	if (board[row - 1][column - 1]->isEmpty()) {
+		cout << "The selection is empty." << endl;
+		return false;
+	}
+
 	// Holds if the player is computer or human.
 	bool isComputer = board[row - 1][column - 1]->getDice()->isPlayerComputer();
 
@@ -106,56 +88,108 @@ bool Board::isLegal(int row, int column, int frontal, int side, bool playerIsCom
 		cout << "You cannot move other players dice." << endl;
 		return false;
 	}
-	// If the cell in the board is empty, return that it is empty.
-	if (board[row - 1][column - 1]->isEmpty()) {
-		cout << "The selection is empty." << endl;
+
+	if (!board[newRow - 1][newCol - 1]->isEmpty()) {
+		if ((board[row - 1][column - 1]->getDice()->isPlayerComputer() && board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) ||
+			!board[row - 1][column - 1]->getDice()->isPlayerComputer() && !board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) {
+			cout << "You cannot replace your own player" << endl;
+			return false;
+		}
+	}
+
+	return true;
+}
+
+
+bool Board::isPathGood(int row, int col, int newRow, int newCol, bool isComputer, bool correctPaths[]) {
+	int frontal = newRow - row;
+	int side = newCol - col;
+
+	row = row - 1;
+	col = col - 1;
+
+	if (board[row][col]->isEmpty()) {
 		return false;
 	}
 
-	// Coordinates that hold the new X and Y positions according to the players
-	int newX = -1;
-	int newY = -1;
+	// At this point, it is obvious that the frontal and side are going to be good.
+	if (board[row][col]->getDice()->getTop() != abs(frontal) + abs(side)) {
+		cout << "The dice cannot make that movement due to mismatch of distance" << endl;
+		return false;
+	}
 
-	// If it is computer's move, then arrange the coordinates accordingly.
+	// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+	
+
+	// Checks if the dice is rolled right or left and assigns the rolling accordingly.
 	if (isComputer) {
-		// Check if it is outside of range of the board.
-		if (frontal + row > ROW_HIGH_LIMIT || frontal + row < ROW_LOW_LIMIT ||
-			column - side > 9 || column - side < 1) {
-			cout << "Invalid move. It is outside the board" << endl;
-			return false;
+		int i = 0;
+		
+		// If it is the computer, then do the increments accordingly and check in each location
+		// for the cells to be empty.
+		
+		for (i = 1; i <= abs(frontal); i++) {
+			int j = frontal > 0 ? i : -i;
+			if (!board[row + j][col]->isEmpty()) correctPaths[0] = false;
 		}
 
-		// Calculates the new position.
-		newX = row - 1 + frontal;
-		newY = column - 1 - side;
+		for (i = 1; i <= abs(side); i++) {
+			int j = side > 0 ? i : -i;
+			if (!board[row][col +j]->isEmpty()) correctPaths[0] = false;
+		}
 
-		// If the new location is not empty, and it is of the same player, return error.
-		if (!board[newX][newY]->isEmpty() && board[newX][newY]->getDice()->isPlayerComputer()) {
-			cout << "Illegal move. You tried replacing your own player" << endl;
-			return false;
+		for (i = 1; i <= abs(side); i++) {
+			int j = side > 0 ? i : -i;
+			if (!board[row][col + j]->isEmpty()) correctPaths[1] = false;
+		}
+
+		for (i = 1; i <= abs(frontal); i++) {
+			int j = frontal > 0 ? i : -i;
+			if (!board[row + j][col]->isEmpty()) correctPaths[1] = false;
 		}
 	}
 	else {
-		// If it is human, find its new coordinates.
-		if (row - frontal > ROW_HIGH_LIMIT || row - frontal < ROW_LOW_LIMIT ||
-			column + side > COLUMN_HIGH_LIMIT || column + side < COLUMN_LOW_LIMIT) {
-			cout << "Invalid move. It is outside the board" << endl;
-			return false;
-		}
-		// Calculates the new position.
-		newX = row - 1 - frontal;
-		newY = column - 1 + side;
+		int i = 0;
 
-		// If the new location is not empty, and it is of the same player, return error.
-		if (!board[newX][newY]->isEmpty() && !board[newX][newY]->getDice()->isPlayerComputer()) {
-			cout << "Illegal move. You tried replacing your own player" << endl;
-			return false;
+		// If it is the computer, then do the increments accordingly and check in each location
+		// for the cells to be empty.
+		int tempRow = row;
+		int tempCol = col;
+
+		for (i = 1; i <= abs(frontal); i++) {
+			int j = frontal < 0 ? -i : i;
+			tempRow = row + j;
+			if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
 		}
+
+		if (correctPaths[0] == true) {
+			for (i = 1; i < abs(side); i++) {
+				int j = side < 0 ? -i : i;
+				tempCol = col+ j;
+				if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
+			}
+		}
+
+		tempRow = row;
+		tempCol = col;
+
+		for (i = 1; i <= abs(side); i++) {
+			int j = side < 0 ? -i : i;
+			tempCol = col + j;
+			if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
+		}
+		if (correctPaths[1] == true) {
+			for (i = 1; i < abs(frontal); i++) {
+				int j = frontal < 0 ? -i : i;
+				tempRow = row + j;
+				if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
+			}
+		}
+		
 	}
 
-	return isPathGood(row-1, column-1, newX, newY) ? true : false;
-}
-
-bool Board::isPathGood(int row, int col, int newRow, int newCol) {
-	return true;
+	if (!correctPaths[0] && !correctPaths[1]) {
+		cout << "There are hindrances on the path" << endl;
+	}
+	return correctPaths[0] || correctPaths[1];
 }

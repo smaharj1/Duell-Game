@@ -21,8 +21,9 @@ private:
 	bool isComputersTurn;
 	bool isDone;
 
-	bool isMoveLegal(int row, int col, int frontal, int side, bool isComputer);
 
+	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
+	bool isPathLegal(int row, int col, int newRow, int newCol, bool isComputer, bool correctPaths[]);
 
 };
 

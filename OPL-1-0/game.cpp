@@ -28,12 +28,14 @@ bool game::isComputerWinner() {
 }
 
 void game::startGame() {
-	int row, column, frontal, side;
+	int row, column, newRow, newCol;
 	while (!isDone) {
-		row = -1, column = -1, frontal = -1, side = -1;
+		row = -1, column = -1, newRow = -1, newCol = -1;
 
 		// Prints the board first.
 		boardView.printBoard();
+
+		bool paths[2] = { true,true };
 
 		// Randomly assigns the turn of the player. Currently, its just user first.
 		if (!isComputersTurn) {
@@ -41,22 +43,29 @@ void game::startGame() {
 			do {
 				cout << "What is your move? Please give coordinates from 1 1 to 8 9 :: ";
 				cin >> row >> column;
-							
-				cout << endl << "Your frontal movement (+ve if front, -ve if backward):: ";
-				cin >> frontal;
-
-				cout << endl << "Your side movement (+ve if right, -ve if left):: ";
-				cin >> side;
-			} while (!isMoveLegal(row, column, frontal, side, false));
 			
-
+				cout << "Enter the preferred destination 1 1 to 8 9 :: ";
+				cin >> newRow >> newCol;
+			} while (isMoveLegal(row, column, newRow, newCol, false) == false ||
+				isPathLegal(row, column, newRow, newCol, false, paths) == false);
 			
+			// If it returns true while moving, it means that the player moving won other player's dice.
+			Dice * returnedDice = board->move(row, column, newRow, newCol);
+			if (returnedDice != NULL) {
+				// Here, the dice that was lost is returned.
+			}
+
+			// TODO: change the player's turn
 		}
 
 		// Moves it according to user's choice
 	}
 }
 
-bool game::isMoveLegal(int row, int col, int frontal, int side, bool isComputer) {
-	return board->isLegal(row, col, frontal, side, isComputer);
+bool game::isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer) {
+	return board->isLegal(row, col, newRow, newCol, isComputer);
+}
+
+bool game::isPathLegal(int row, int col, int newRow, int newCol, bool isComputer, bool correctPaths[]) {
+	return board->isPathGood(row, col, newRow, newCol, isComputer, correctPaths);
 }
