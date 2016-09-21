@@ -23,10 +23,15 @@ public:
 	int getRight();
 	static string generateDice(bool isComputer);
 
+	void setAsKing(string val);
+
+	bool isPlayerKing();
+
 	bool isPlayerComputer();
 
 private:
 	bool isComputer;
+	bool isKing;
 	int top;
 	int right;
 	int front;

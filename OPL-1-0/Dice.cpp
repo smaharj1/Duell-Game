@@ -5,7 +5,12 @@
 Dice::Dice(string given)
 {
 	front = DICE_FRONT;
-	setValue(given);
+	if (given.at(1) == '1' && given.at(2) == '1') {
+		setAsKing(given);
+	}
+	else {
+		setValue(given);
+	}
 }
 
 
@@ -22,27 +27,47 @@ string Dice::getValue() {
 }
 
 void Dice::moveLeft() {
-	int tmp = top;
-	top = right;
-	right = 7 - tmp;
+	if (!isKing) {
+		int tmp = top;
+		top = right;
+		right = 7 - tmp;
+	}
 }
 
 void Dice::moveRight() {
-	int tmp = top;
-	top = 7 - right;
-	right = tmp;
+	if (!isKing) {
+		int tmp = top;
+		top = 7 - right;
+		right = tmp;
+	}
 }
 
 void Dice::moveBackward() {
-	int tmp = top;
-	top = 7 - front;
-	front = tmp;
+	if (!isKing) {
+		int tmp = top;
+		top = 7 - front;
+		front = tmp;
+	}
 }
 
 void Dice::moveForward() {
-	int tmp = top;
-	top = front;
-	front = 7 - tmp;
+	if (!isKing) {
+		int tmp = top;
+		top = front;
+		front = 7 - tmp;
+	}
+}
+
+void Dice::setAsKing(string val) {
+	isComputer = val.at(0) == 'C' ? true : false;
+	top = 1;
+	right = 1;
+	front = 1;
+	isKing = true;
+}
+
+bool Dice::isPlayerKing() {
+	return isKing;
 }
 
 void Dice::setValue(string val) {
@@ -50,6 +75,7 @@ void Dice::setValue(string val) {
 	top = val.at(1)-'0';
 	right = val.at(2) - '0';
 	front = DICE_FRONT;
+	isKing = false;
 }
 
 int Dice::getTop() {

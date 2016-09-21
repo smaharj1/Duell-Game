@@ -11,8 +11,9 @@ game::game()
 
 	boardView.setBoard(board);
 
-	isComputersTurn = true;
+	isComputersTurn = false;
 	isDone = false;
+	computerWin = true;
 
 }
 
@@ -51,6 +52,8 @@ void game::startGame() {
 				// convert user given input to array compatible input 
 				row = 9 - row;
 				newRow = 9 - newRow;
+				paths[0] = true;
+				paths[1] = true;
 			} while (isMoveLegal(row, column, newRow, newCol, false) == false ||
 				isPathLegal(row, column, newRow, newCol, paths) == false);
 			
@@ -58,6 +61,10 @@ void game::startGame() {
 			Dice * returnedDice = board->move(row, column, newRow, newCol);
 			if (returnedDice != NULL) {
 				// Here, the dice that was lost is returned.
+				if (returnedDice->isPlayerKing()) {
+					isDone = true;
+					computerWin = false;
+				}
 			}
 
 		}
@@ -75,6 +82,8 @@ void game::startGame() {
 				// convert user given input to array compatible input 
 				row = 9 - row;
 				newRow = 9 - newRow;
+				paths[0] = true;
+				paths[1] = true;
 			} while (isMoveLegal(row, column, newRow, newCol, true) == false ||
 				isPathLegal(row, column, newRow, newCol, paths) == false);
 
@@ -82,12 +91,16 @@ void game::startGame() {
 			Dice * returnedDice = board->move(row, column, newRow, newCol);
 			if (returnedDice != NULL) {
 				// Here, the dice that was lost is returned.
+				if (returnedDice->isPlayerKing()) {
+					isDone = true;
+					computerWin = false;
+				}
 			}
 
 		}
 
 		// TODO: change the player's turn
-		//isComputersTurn = !isComputersTurn;
+		isComputersTurn = !isComputersTurn;
 
 		// Moves it according to user's choice
 	}

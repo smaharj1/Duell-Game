@@ -20,6 +20,7 @@ private:
 	Board * board;
 	bool isComputersTurn;
 	bool isDone;
+	bool computerWin;
 
 
 	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
