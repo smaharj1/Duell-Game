@@ -8,11 +8,11 @@ Board::Board()
 		for (int j = 0; j < COLUMNS; j++) {
 			Dice * d;
 			if (i == 0) {
-				d = new Dice("C51");
+				d = new Dice("C21");
 				board[i][j] = new Cell(d);
 			}
 			else if (i == ROWS - 1) {
-				d = new Dice("H51");
+				d = new Dice("H21");
 				board[i][j] = new Cell(d);
 			}
 			else {
@@ -42,16 +42,39 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 	int frontal = newRow - row;
 	int side = newCol - column;
 	
-	// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
-	for (int i = 0; i < abs(frontal); i++) {
-		frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
-			board[row - 1][column - 1]->getDice()->moveBackward();
-	}
+	if (!isComputer) {
+		// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+		for (int i = 0; i < abs(frontal); i++) {
+			frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+				board[row - 1][column - 1]->getDice()->moveBackward();
 
-	// Checks if the dice is rolled right or left and assigns the rolling accordingly.
-	for (int i = 0; i < abs(side); i++) {
-		side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
-			board[row - 1][column - 1]->getDice()->moveLeft();
+			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+		}
+
+		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+		for (int i = 0; i < abs(side); i++) {
+			side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+				board[row - 1][column - 1]->getDice()->moveLeft();
+
+			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+		}
+	}
+	else {
+		// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+		for (int i = 0; i < abs(frontal); i++) {
+			frontal > 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+				board[row - 1][column - 1]->getDice()->moveBackward();
+
+			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+		}
+
+		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+		for (int i = 0; i < abs(side); i++) {
+			side < 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+				board[row - 1][column - 1]->getDice()->moveLeft();
+
+			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+		}
 	}
 
 	// Adds the dice to the Cell and removes the dice from previous location.
@@ -101,7 +124,7 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 }
 
 
-bool Board::isPathGood(int row, int col, int newRow, int newCol, bool isComputer, bool correctPaths[]) {
+bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPaths[]) {
 	int frontal = newRow - row;
 	int side = newCol - col;
 
@@ -122,72 +145,44 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool isComputer
 	
 
 	// Checks if the dice is rolled right or left and assigns the rolling accordingly.
-	if (isComputer) {
-		int i = 0;
-		
-		// If it is the computer, then do the increments accordingly and check in each location
-		// for the cells to be empty.
-		
-		for (i = 1; i <= abs(frontal); i++) {
-			int j = frontal > 0 ? i : -i;
-			if (!board[row + j][col]->isEmpty()) correctPaths[0] = false;
-		}
 
-		for (i = 1; i <= abs(side); i++) {
-			int j = side > 0 ? i : -i;
-			if (!board[row][col +j]->isEmpty()) correctPaths[0] = false;
-		}
+	int i = 0;
 
-		for (i = 1; i <= abs(side); i++) {
-			int j = side > 0 ? i : -i;
-			if (!board[row][col + j]->isEmpty()) correctPaths[1] = false;
-		}
+	// If it is the computer, then do the increments accordingly and check in each location
+	// for the cells to be empty.
+	int tempRow = row;
+	int tempCol = col;
 
-		for (i = 1; i <= abs(frontal); i++) {
-			int j = frontal > 0 ? i : -i;
-			if (!board[row + j][col]->isEmpty()) correctPaths[1] = false;
-		}
+	for (i = 1; i <= abs(frontal); i++) {
+		int j = frontal < 0 ? -i : i;
+		tempRow = row + j;
+		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
 	}
-	else {
-		int i = 0;
 
-		// If it is the computer, then do the increments accordingly and check in each location
-		// for the cells to be empty.
-		int tempRow = row;
-		int tempCol = col;
-
-		for (i = 1; i <= abs(frontal); i++) {
-			int j = frontal < 0 ? -i : i;
-			tempRow = row + j;
+	if (correctPaths[0] == true) {
+		for (i = 1; i < abs(side); i++) {
+			int j = side < 0 ? -i : i;
+			tempCol = col+ j;
 			if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
 		}
-
-		if (correctPaths[0] == true) {
-			for (i = 1; i < abs(side); i++) {
-				int j = side < 0 ? -i : i;
-				tempCol = col+ j;
-				if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
-			}
-		}
-
-		tempRow = row;
-		tempCol = col;
-
-		for (i = 1; i <= abs(side); i++) {
-			int j = side < 0 ? -i : i;
-			tempCol = col + j;
-			if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
-		}
-		if (correctPaths[1] == true) {
-			for (i = 1; i < abs(frontal); i++) {
-				int j = frontal < 0 ? -i : i;
-				tempRow = row + j;
-				if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
-			}
-		}
-		
 	}
 
+	tempRow = row;
+	tempCol = col;
+
+	for (i = 1; i <= abs(side); i++) {
+		int j = side < 0 ? -i : i;
+		tempCol = col + j;
+		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
+	}
+	if (correctPaths[1] == true) {
+		for (i = 1; i < abs(frontal); i++) {
+			int j = frontal < 0 ? -i : i;
+			tempRow = row + j;
+			if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
+		}
+	}
+		
 	if (!correctPaths[0] && !correctPaths[1]) {
 		cout << "There are hindrances on the path" << endl;
 	}

@@ -23,7 +23,7 @@ private:
 
 
 	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
-	bool isPathLegal(int row, int col, int newRow, int newCol, bool isComputer, bool correctPaths[]);
+	bool isPathLegal(int row, int col, int newRow, int newCol, bool correctPaths[]);
 
 };
 
