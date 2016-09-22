@@ -3,6 +3,9 @@
 #include<iostream>
 #include"boardView.h"
 #include"Board.h"
+#include"player.h"
+#include"human.h"
+#include "computer.h"
 
 using namespace std;
 
@@ -22,9 +25,14 @@ private:
 	bool isDone;
 	bool computerWin;
 
+	player * humanP;
+	player * bot;
 
+	void printMove(int row, int col, int newRow, int newCol, bool isComputer);
 	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
 	bool isPathLegal(int row, int col, int newRow, int newCol, bool correctPaths[]);
+
+	const int MAX_ROW = 9;
 
 };
 

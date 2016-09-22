@@ -48,7 +48,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 			frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
 				board[row - 1][column - 1]->getDice()->moveBackward();
 
-			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
 		}
 
 		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
@@ -56,7 +56,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 			side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
 				board[row - 1][column - 1]->getDice()->moveLeft();
 
-			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
 		}
 	}
 	else {
@@ -65,7 +65,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 			frontal > 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
 				board[row - 1][column - 1]->getDice()->moveBackward();
 
-			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
 		}
 
 		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
@@ -73,7 +73,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 			side < 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
 				board[row - 1][column - 1]->getDice()->moveLeft();
 
-			cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
 		}
 	}
 
@@ -92,12 +92,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol) {
 
 
 bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsComputer) {
-	if (row < ROW_LOW_LIMIT || newRow < ROW_LOW_LIMIT || column < COLUMN_LOW_LIMIT || newCol < COLUMN_LOW_LIMIT ||
-		row > ROW_HIGH_LIMIT || newRow > ROW_HIGH_LIMIT || column > COLUMN_HIGH_LIMIT || newCol > COLUMN_HIGH_LIMIT) {
-		cout << "Coordinates is out of bound. Please enter again." << endl << endl;
-		return false;
-	}
-	
+
 	// If the cell in the board is empty, return that it is empty.
 	if (board[row - 1][column - 1]->isEmpty()) {
 		cout << "The selection is empty." << endl;
