@@ -7,9 +7,9 @@ board:
   0    0    0    0    0    0    0    0    0  
   0    H63    0    0    0    0    0    0    0  
   0    H21    H21    H21    H21    H21    H21    H21    H21  
-
+         
 Computer Wins: 2
 
 Human Wins: 1
 
-Next Player: Computer
+Next Player:        Computer

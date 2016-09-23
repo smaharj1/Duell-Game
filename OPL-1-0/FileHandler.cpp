@@ -79,6 +79,7 @@ void FileHandler::openGame(Board * tempBoard, bool &isComputersTurn, int &comput
 			while (ss >> str) {
 				tmp.push_back(str);
 			}
+			if (tmp.empty()) continue;
 			switch(lineIndex) {
 			case 11: // This determines the turn of player.
 				isComputersTurn = tmp.at(tmp.size() - 1) == "Human" ? false : true;
