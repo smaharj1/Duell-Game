@@ -2,6 +2,7 @@
 #include"Dice.h"
 #include"Board.h"
 #include "tournament.h"
+#include<fstream>
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main() {
 
 	t.printWelcomeMessage();
 	t.startGame();
+
 
 	system("pause");
 }

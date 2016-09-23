@@ -7,6 +7,8 @@ tournament::tournament()
 	totalGames = 0;
 	humanScore = 0;
 	computerScore = 0;
+
+	fileFunction = new FileHandler("game.txt");
 }
 
 
@@ -25,15 +27,35 @@ void tournament::startGame() {
 	cin >> userInput;
 	game * newGame;
 
-	while (userInput == 'Y' || userInput == 'y') {
-		totalGames++;
-		newGame = new game();
-		newGame->startGame();
+	bool isGameCompleted = true;
 
-		if (newGame->isComputerWinner()) {
-			computerScore++;		
+	userInput = tolower(userInput);
+	while (userInput == 'y' || userInput == 'o') {
+		
+		if (userInput == 'y') {
+			totalGames++;
+			newGame = new game();
 		}
-		else humanScore++;
+		else {
+			Board * tempBoard = new Board();
+			bool isComputersTurn;
+			fileFunction->openGame(tempBoard, isComputersTurn, computerScore, humanScore);
+
+			newGame = new game(tempBoard, isComputersTurn);
+		}
+		isGameCompleted = newGame->startGame();
+
+		if (isGameCompleted) {
+			if (newGame->isComputerWinner()) {
+				computerScore++;
+			}
+			else humanScore++;
+		}
+		else {
+			// Game needs to be saved.
+			fileFunction->saveGame(newGame->getBoard(), newGame->getIfComputerTurn(), computerScore, humanScore);
+
+		}
 
 		cout << "Do you want to play another game (Y/N)? :: " << endl;
 		cin >> userInput;

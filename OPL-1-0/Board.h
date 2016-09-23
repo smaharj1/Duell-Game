@@ -3,6 +3,7 @@
 #include"Dice.h"
 #include"Cell.h"
 
+
 class Board
 {
 public:
@@ -18,6 +19,8 @@ public:
 
 	bool isLegal(int row, int column, int newRow, int newCol, bool isComputer);
 	bool isPathGood(int row, int col, int newRow, int newCol, bool correctPaths[]);
+
+	void setBoard(string tempBoard[][9]);
 
 private:
 	Cell * board[8][9];

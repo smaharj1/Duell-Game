@@ -27,6 +27,19 @@ Board::~Board()
 {
 }
 
+void Board::setBoard(string tempBoard[][9]) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLUMNS; j++) {
+			if (tempBoard[i][j] == "0") {
+				board[i][j] = new Cell();
+			}
+			else {
+				board[i][j] = new Cell(new Dice(tempBoard[i][j]));
+			}
+		}
+	}
+}
+
 Dice * Board::move(int row, int column, int newRow, int newCol) {
 	Dice * diceAte = NULL;
 

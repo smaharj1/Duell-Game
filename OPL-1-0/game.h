@@ -6,6 +6,8 @@
 #include"player.h"
 #include"human.h"
 #include "computer.h"
+#include<fstream>
+#include"FileHandler.h"
 
 using namespace std;
 
@@ -14,9 +16,14 @@ class game
 public:
 	game();
 	~game();
+	game(Board * tempBoard, bool computersTurn);
 
 	bool isComputerWinner();
-	void startGame();
+	bool startGame();
+
+	Board * getBoard() { return board; }
+	bool getIfComputerTurn() { return isComputersTurn; }
+
 
 private:
 	BoardView boardView;
@@ -24,6 +31,8 @@ private:
 	bool isComputersTurn;
 	bool isDone;
 	bool computerWin;
+	char userInput;
+	
 
 	player * humanP;
 	player * bot;

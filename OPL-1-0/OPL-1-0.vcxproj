@@ -152,6 +152,7 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="computer.cpp" />
     <ClCompile Include="Dice.cpp" />
+    <ClCompile Include="FileHandler.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="human.cpp" />
     <ClCompile Include="player.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="computer.h" />
     <ClInclude Include="Dice.h" />
+    <ClInclude Include="FileHandler.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="human.h" />
     <ClInclude Include="player.h" />

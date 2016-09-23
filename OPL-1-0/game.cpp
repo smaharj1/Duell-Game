@@ -18,8 +18,19 @@ game::game()
 	humanP = new human();
 	bot = new computer();
 
+
 }
 
+game::game(Board * tempBoard, bool computersTurn) {
+	board = tempBoard;
+	isComputersTurn = computersTurn;
+
+	boardView.setBoard(board);
+	isDone = false;
+	computerWin = true;
+	humanP = new human();
+	bot = new computer();
+}
 
 game::~game()
 {
@@ -31,10 +42,10 @@ bool game::isComputerWinner() {
 	return false;
 }
 
-void game::startGame() {
+// this will update if the game is finished or it is just saved.
+bool game::startGame() {
 	int row, column, newRow, newCol;
 	while (!isDone) {
-		//row = -1, column = -1, newRow = -1, newCol = -1;
 
 		// Prints the board first.
 		boardView.printBoard();
@@ -56,7 +67,7 @@ void game::startGame() {
 
 			// If it returns true while moving, it means that the player moving won other player's dice.
 			Dice * returnedDice = board->move(humanP->getRow(), humanP->getColumn(), humanP->getNewRow(), humanP->getNewCol());
-
+			printMove(MAX_ROW - humanP->getRow(), humanP->getColumn(), MAX_ROW - humanP->getNewRow(), humanP->getNewCol(), isComputersTurn);
 			if (returnedDice != NULL) {
 				// Here, the dice that was lost is returned.
 				if (returnedDice->isPlayerKing()) {
@@ -102,11 +113,19 @@ void game::startGame() {
 
 		}
 
-		printMove(MAX_ROW-humanP->getRow(), humanP->getColumn(), MAX_ROW - humanP->getNewRow(), humanP->getNewCol(), isComputersTurn);
+		
 		// TODO: change the player's turn
 		isComputersTurn = !isComputersTurn;
 
-		// Moves it according to user's choice
+		// Prompt the user if they want to keep playing
+		cout << "Do you want to keep playing or save the game? (S for save):: ";
+		cin >> userInput;
+
+		if (userInput == 'S' || userInput == 's') {
+			return false;
+		}
+
+
 	}
 }
 
