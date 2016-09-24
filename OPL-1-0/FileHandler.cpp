@@ -20,7 +20,7 @@ void FileHandler::saveGame(Board * board, bool isComputer, int computerScore, in
 		return;
 	}
 
-	ofile << "board:" << endl;
+	ofile << "Board:" << endl;
 	for (int index = 0; index < board->getTotalRows(); index++) {
 		for (int j = 0; j < board->getTotalColumns(); j++) {
 			if (board->getCell(index, j)->isEmpty()) {
@@ -33,16 +33,19 @@ void FileHandler::saveGame(Board * board, bool isComputer, int computerScore, in
 		ofile << endl;
 	}
 	ofile << endl;
+	
+	ofile << "Computer Wins: " << computerScore << endl << endl;
+	ofile << "Human Wins: " << humanScore << endl << endl;
 	if (isComputer) {
-		ofile << "Turn: " << "computer";
+		ofile << "Next Player: " << "computer";
 	}
 	else {
-		ofile << "Turn: " << "human";
+		ofile << "Next Player: " << "human";
 	}
 	ofile << endl << endl;
 
-	ofile << "HumanScore: " << humanScore << endl;
-	ofile << "ComputerScore: " << computerScore << endl;
+	
+	
 
 	ofile.close();
 
