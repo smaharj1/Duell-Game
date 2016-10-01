@@ -11,6 +11,8 @@ public:
 	~computer();
 	Dice * play(Board * board);
 
+	Dice ** getDices() { return computerDices; }
+
 private:
 	Dice * computerDices[9];
 };

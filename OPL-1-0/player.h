@@ -10,6 +10,7 @@ public:
 	player();
 	~player();
 	virtual Dice * play(Board * board) { cout << "Base class can't play" << endl; return NULL; };
+	virtual Dice ** getDices() { return NULL; }
 
 	int getRow();
 	int getColumn();

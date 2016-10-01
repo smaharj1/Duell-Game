@@ -4,10 +4,12 @@
 #include"Cell.h"
 
 
+
 class Board
 {
 public:
 	Board();
+	//Board(player * humanP, player * bot);
 	~Board();
 	
 	int getTotalRows() { return ROWS; }

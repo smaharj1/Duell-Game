@@ -18,9 +18,6 @@ game::game()
 	isDone = false;
 	computerWin = true;
 
-	
-
-
 }
 
 game::game(Board * tempBoard, bool computersTurn) {
