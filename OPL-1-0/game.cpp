@@ -56,14 +56,8 @@ bool game::startGame() {
 		if (!isComputersTurn) {
 			//cout << "It is your turn. Please make a move " << endl;
 			// Asks for user's move
-			do {
-				humanP->play();
-				paths[0] = true;
-				paths[1] = true;
-			} while (isMoveLegal(humanP->getRow(), humanP->getColumn(), humanP->getNewRow(), humanP->getNewCol(), false) == false ||
-				isPathLegal(humanP->getRow(), humanP->getColumn(), humanP->getNewRow(), humanP->getNewCol(), paths) == false);
 			
-			
+			humanP->play(board);
 
 			// If it returns true while moving, it means that the player moving won other player's dice.
 			Dice * returnedDice = board->move(humanP->getRow(), humanP->getColumn(), humanP->getNewRow(), humanP->getNewCol());
@@ -80,7 +74,7 @@ bool game::startGame() {
 		else {
 			cout << "It is computer's turn." << endl;
 
-			bot->play();
+			bot->play(board);
 
 			/*
 			// Asks for user's move

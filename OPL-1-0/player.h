@@ -1,5 +1,6 @@
 #pragma once
 #include"Dice.h"
+#include"Board.h"
 
 using namespace std;
 
@@ -8,7 +9,7 @@ class player
 public:
 	player();
 	~player();
-	virtual void play() { cout << "Base class can't play" << endl; };
+	virtual void play(Board * board) { cout << "Base class can't play" << endl; };
 
 	int getRow();
 	int getColumn();
