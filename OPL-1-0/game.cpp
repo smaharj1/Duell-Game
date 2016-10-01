@@ -57,11 +57,8 @@ bool game::startGame() {
 			//cout << "It is your turn. Please make a move " << endl;
 			// Asks for user's move
 			
-			humanP->play(board);
+			Dice * returnedDice = humanP->play(board);
 
-			// If it returns true while moving, it means that the player moving won other player's dice.
-			Dice * returnedDice = board->move(humanP->getRow(), humanP->getColumn(), humanP->getNewRow(), humanP->getNewCol());
-			printMove(MAX_ROW - humanP->getRow(), humanP->getColumn(), MAX_ROW - humanP->getNewRow(), humanP->getNewCol(), isComputersTurn);
 			if (returnedDice != NULL) {
 				// Here, the dice that was lost is returned.
 				if (returnedDice->isPlayerKing()) {
