@@ -21,8 +21,8 @@ public:
 
 	int getTop();
 	int getRight();
-	static string generateDice(bool isComputer);
 
+	int computeFrontFace(int top, int right);
 	void setAsKing(string val);
 
 	bool isPlayerKing();

@@ -89,3 +89,48 @@ int Dice::getRight() {
 bool Dice::isPlayerComputer() {
 	return isComputer;
 }
+
+int Dice::computeFrontFace(int top, int right) {
+	int roles[3][8] = { { 3,1,4,6,3,1,4,6 },{ 1,2,6,5,1,2,6,5 },{ 2,3,5,4,2,3,5,4 } };
+	int remain = 0;
+	int front = 0;
+
+	if (top == 1 || 7 - top == 1) {
+		if (right == 2 || 7 - right == 2) {
+			remain = 3;
+		}
+		else remain = 2;
+	}
+	else if (top == 2 || 7 - top == 2) {
+		if (right == 1 || 7 - right == 1) {
+			remain = 3;
+		}
+		else remain = 1;
+	}
+	else {
+		// here top = 3
+		if (right == 1 || 7 - right == 1) {
+			remain = 2;
+		}
+		else remain = 1;
+	}
+
+
+	// compute front
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (roles[i][j] == top) {
+				if (j + 1 < 8 && roles[i][j + 1] == right) {
+					front = 7 - remain;
+					break;
+				}
+				else if (j - 1 >= 0 && roles[i][j - 1] == right) {
+					front = remain;
+					break;
+				}
+			}
+		}
+	}
+
+	return front;
+}
