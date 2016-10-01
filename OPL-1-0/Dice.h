@@ -9,6 +9,7 @@ class Dice
 {
 public:
 	Dice(string given);
+	Dice(bool isComputer, int topFace, int frontFace, int rightFace);
 	~Dice();
 
 	void moveLeft();
@@ -22,12 +23,13 @@ public:
 	int getTop();
 	int getRight();
 
-	int computeFrontFace(int top, int right);
+	static int computeFrontFace(int top, int right);
 	void setAsKing(string val);
 
 	bool isPlayerKing();
 
 	bool isPlayerComputer();
+	bool setKing();
 
 private:
 	bool isComputer;
@@ -35,6 +37,7 @@ private:
 	int top;
 	int right;
 	int front;
+	bool isKilled;
 
 	const int DICE_FRONT = 3;
 

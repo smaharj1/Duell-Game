@@ -7,6 +7,25 @@ human::human()
 	
 }
 
+human::human(int keys[], int size)
+{
+	int top = 0, right = 0, front = 0;
+	int mid = size / 2;
+	for (int index = 0; index < size; index++) {
+		top = keys[index];
+		right = 3;
+		front = Dice::computeFrontFace(top, right);
+
+		// here, right is technically front. We are considering it right to find an actual right.
+		if (index == mid) {
+			humanDices[index] = new Dice(false, 1, 1, 1);
+		}
+		else {
+			humanDices[index] = new Dice(false, top, right, 7 - front);
+		}
+
+	}
+}
 
 human::~human()
 {

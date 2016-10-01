@@ -7,6 +7,7 @@ class human : public player
 {
 public:
 	human();
+	human(int keys[], int size);
 	~human();
 	Dice * play(Board * board);
 

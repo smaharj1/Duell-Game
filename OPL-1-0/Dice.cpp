@@ -13,6 +13,21 @@ Dice::Dice(string given)
 	}
 }
 
+Dice::Dice(bool isComputer, int topFace, int frontFace, int rightFace) {
+	this->isComputer = isComputer;
+	if (topFace == frontFace) {
+		setKing();
+	}
+	else {
+		front = frontFace;
+		top = topFace;
+		right = rightFace;
+		isKing = false;
+	}
+
+	isKilled = false;
+
+}
 
 Dice::~Dice()
 {
@@ -58,6 +73,15 @@ void Dice::moveForward() {
 	}
 }
 
+
+bool Dice::setKing() {
+	top = 1;
+	right = 1;
+	front = 1;
+	isKing = true;
+
+	return true;
+}
 void Dice::setAsKing(string val) {
 	isComputer = val.at(0) == 'C' ? true : false;
 	top = 1;
