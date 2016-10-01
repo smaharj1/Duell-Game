@@ -6,6 +6,8 @@
 game::game()
 {
 	// Assign players here
+	humanP = new human();
+	bot = new computer();
 
 	board = new Board();
 
@@ -15,8 +17,7 @@ game::game()
 	isDone = false;
 	computerWin = true;
 
-	humanP = new human();
-	bot = new computer();
+	
 
 
 }
@@ -44,13 +45,12 @@ bool game::isComputerWinner() {
 
 // this will update if the game is finished or it is just saved.
 bool game::startGame() {
-	int row, column, newRow, newCol;
+
 	while (!isDone) {
 
 		// Prints the board first.
 		boardView.printBoard();
 
-		bool paths[2];
 
 		// Randomly assigns the turn of the player. Currently, its just user first.
 		if (!isComputersTurn) {
