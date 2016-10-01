@@ -14,7 +14,7 @@ public:
 	
 	int getTotalRows() { return ROWS; }
 	int getTotalColumns() { return COLUMNS; }
-	Dice * move(int row, int col, int newRow, int newCol);
+	Dice * move(int row, int col, int newRow, int newCol, char direction);
 
 	// Initialization starts from 0;
 	Cell * getCell(int row, int col) { return board[row][col]; }

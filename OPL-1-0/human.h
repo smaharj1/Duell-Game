@@ -18,5 +18,7 @@ public:
 
 private:
 	Dice * humanDices[9];
+
+	bool validValues(char row, char col, char newRow, char newCol);
 };
 

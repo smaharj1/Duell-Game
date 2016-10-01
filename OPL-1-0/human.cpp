@@ -61,12 +61,20 @@ Dice * human::play(Board * board) {
 	cout << "It is your turn. Please make a move " << endl;
 	// Asks for user's move
 	do {
-		cout << "What is your move? Please give coordinates from 1 1 to 8 9 :: ";
-		cin >> row >> column;
+		char r, c, newR, newC;
 
-		cout << "Enter the preferred destination 1 1 to 8 9 :: ";
-		cin >> newRow >> newCol;
+		do {
+			cout << "What is your move? Please give coordinates from 1 1 to 8 9 :: ";
+			cin >> r >> c;
 
+			cout << "Enter the preferred destination 1 1 to 8 9 :: ";
+			cin >> newR >> newC;
+		} while (!validValues(r, c, newR, newC));
+
+		row = r - '0';
+		column = c - '0';
+		newRow = newR - '0';
+		newCol = newC - '0';
 		// convert user given input to array compatible input 
 		row = 9 - row;
 		newRow = 9 - newRow;
@@ -89,6 +97,7 @@ Dice * human::play(Board * board) {
 			}
 			else {
 				cout << "Dice cannot make frontal move first because of the distractions... Going lateral..." << endl;
+				direction = 'l';
 			}
 		}
 		else if (direction == 'l') {
@@ -97,6 +106,7 @@ Dice * human::play(Board * board) {
 			}
 			else {
 				cout << "Dice cannot make lateral move first because of the distractions... Going frontal..." << endl;
+				direction = 'f';
 			}
 		}
 		else {
@@ -106,7 +116,15 @@ Dice * human::play(Board * board) {
 
 
 	// If it returns true while moving, it means that the player moving won other player's dice.
-	Dice * returnedDice = board->move(row, column, newRow, newCol);
+	Dice * returnedDice = board->move(row, column, newRow, newCol, direction);
 
 	return returnedDice;
+}
+
+bool human::validValues(char row, char col, char newRow, char newCol) {
+	bool res = isdigit(row) && isdigit(col) && isdigit(newRow) && isdigit(newCol);
+	if (!res) {
+		cout << "Some of the values entered are not numbers" << endl;
+	}
+	return res;
 }

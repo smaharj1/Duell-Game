@@ -31,6 +31,8 @@ public:
 	bool isPlayerComputer();
 	bool setKing();
 
+	bool setKilled();
+
 private:
 	bool isComputer;
 	bool isKing;

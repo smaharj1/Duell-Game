@@ -1,7 +1,5 @@
 #include "Dice.h"
 
-
-
 Dice::Dice(string given)
 {
 	top = given.at(1)-'0';
@@ -15,6 +13,8 @@ Dice::Dice(string given)
 	}
 
 	isComputer = given.at(0) == 'C' ? true : false;
+
+	isKilled = false;
 
 }
 
@@ -162,4 +162,10 @@ int Dice::computeFrontFace(int top, int right) {
 	}
 
 	return front;
+}
+
+bool Dice::setKilled() {
+	isKilled = true;
+
+	return true;
 }

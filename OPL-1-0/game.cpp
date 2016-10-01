@@ -67,6 +67,9 @@ bool game::startGame() {
 					isDone = true;
 					computerWin = false;
 				}
+				else {
+					returnedDice->setKilled();
+				}
 			}
 
 		}
@@ -74,36 +77,6 @@ bool game::startGame() {
 			cout << "It is computer's turn." << endl;
 
 			bot->play(board);
-
-			/*
-			// Asks for user's move
-			do {
-				cout << "What is your move? Please give coordinates from 1 1 to 8 9 :: ";
-				cin >> row >> column;
-
-				cout << "Enter the preferred destination 1 1 to 8 9 :: ";
-				cin >> newRow >> newCol;
-
-				// convert user given input to array compatible input 
-				row = MAX_ROW - row;
-				newRow = MAX_ROW - newRow;
-				paths[0] = true;
-				paths[1] = true;
-			} while (isMoveLegal(row, column, newRow, newCol, true) == false ||
-				isPathLegal(row, column, newRow, newCol, paths) == false);
-
-			// If it returns true while moving, it means that the player moving won other player's dice.
-			Dice * returnedDice = board->move(row, column, newRow, newCol);
-			if (returnedDice != NULL) {
-				// Here, the dice that was lost is returned.
-				if (returnedDice->isPlayerKing()) {
-					isDone = true;
-					computerWin = false;
-				}
-			}
-
-			*/
-
 		}
 
 		

@@ -56,53 +56,86 @@ void Board::setBoard(string tempBoard[][9]) {
 	}
 }
 
-Dice * Board::move(int row, int column, int newRow, int newCol) {
+Dice * Board::move(int row, int column, int newRow, int newCol, char direction) {
 	Dice * diceAte = NULL;
 
 	// Holds if the player is computer or human.
 	bool isComputer = board[row-1][column-1]->getDice()->isPlayerComputer();
 
 	// If the cell in the board is empty, return that it is empty.
-	if (board[row - 1][column - 1]->isEmpty()) {
-		cout << "The selection is empty." << endl;
-		return false;
-	}
-
 	int frontal = newRow - row;
 	int side = newCol - column;
 	
 	if (!isComputer) {
-		// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
-		for (int i = 0; i < abs(frontal); i++) {
-			frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
-				board[row - 1][column - 1]->getDice()->moveBackward();
+		if (direction == 'f') {
+			// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+			for (int i = 0; i < abs(frontal); i++) {
+				frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+					board[row - 1][column - 1]->getDice()->moveBackward();
 
-			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
+
+			// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+			for (int i = 0; i < abs(side); i++) {
+				side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+					board[row - 1][column - 1]->getDice()->moveLeft();
+
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
 		}
+		else {
+			// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+			for (int i = 0; i < abs(side); i++) {
+				side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+					board[row - 1][column - 1]->getDice()->moveLeft();
 
-		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
-		for (int i = 0; i < abs(side); i++) {
-			side > 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
-				board[row - 1][column - 1]->getDice()->moveLeft();
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
 
-			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+			for (int i = 0; i < abs(frontal); i++) {
+				frontal < 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+					board[row - 1][column - 1]->getDice()->moveBackward();
+
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}			
 		}
 	}
 	else {
-		// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
-		for (int i = 0; i < abs(frontal); i++) {
-			frontal > 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
-				board[row - 1][column - 1]->getDice()->moveBackward();
+		if (direction == 'f') {
+			// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+			for (int i = 0; i < abs(frontal); i++) {
+				frontal > 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+					board[row - 1][column - 1]->getDice()->moveBackward();
 
-			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
+
+			// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+			for (int i = 0; i < abs(side); i++) {
+				side < 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+					board[row - 1][column - 1]->getDice()->moveLeft();
+
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
 		}
+		else {
+			// Checks if the dice is rolled right or left and assigns the rolling accordingly.
+			for (int i = 0; i < abs(side); i++) {
+				side < 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
+					board[row - 1][column - 1]->getDice()->moveLeft();
 
-		// Checks if the dice is rolled right or left and assigns the rolling accordingly.
-		for (int i = 0; i < abs(side); i++) {
-			side < 0 ? board[row - 1][column - 1]->getDice()->moveRight() :
-				board[row - 1][column - 1]->getDice()->moveLeft();
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
 
-			//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
+			for (int i = 0; i < abs(frontal); i++) {
+				frontal > 0 ? board[row - 1][column - 1]->getDice()->moveForward() :
+					board[row - 1][column - 1]->getDice()->moveBackward();
+
+				//cout << board[row - 1][column - 1]->getDice()->getValue() << endl;
+			}
 		}
 	}
 
@@ -176,6 +209,9 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 	// for the cells to be empty.
 	int tempRow = row;
 	int tempCol = col;
+
+	if (abs(frontal) == 0) correctPaths[0] = false;
+	if (abs(side) == 0) correctPaths[1] = false;
 
 	for (i = 1; i <= abs(frontal); i++) {
 		int j = frontal < 0 ? -i : i;
