@@ -64,10 +64,10 @@ Dice * human::play(Board * board) {
 		char r, c, newR, newC;
 
 		do {
-			cout << "What is your move? Please give coordinates from 1 1 to 8 9 :: ";
+			cout << "Enter your move? Please give coordinates from 1 1 to 8 9 :: ";
 			cin >> r >> c;
 
-			cout << "Enter the preferred destination 1 1 to 8 9 :: ";
+			cout << "Enter the preferred destination from 1 1 to 8 9 :: ";
 			cin >> newR >> newC;
 		} while (!validValues(r, c, newR, newC));
 
@@ -110,13 +110,15 @@ Dice * human::play(Board * board) {
 			}
 		}
 		else {
-			cout << "Invalid character entered" << endl;
+			cout << "Invalid character entered. Please enter it again" << endl;
 		}
 	} while (direction != 'f' && direction != 'l');
 
 
 	// If it returns true while moving, it means that the player moving won other player's dice.
 	Dice * returnedDice = board->move(row, column, newRow, newCol, direction);
+
+	printMove(row, column, newRow, newCol, direction);
 
 	return returnedDice;
 }
@@ -128,3 +130,4 @@ bool human::validValues(char row, char col, char newRow, char newCol) {
 	}
 	return res;
 }
+

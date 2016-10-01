@@ -53,12 +53,18 @@ bool game::startGame() {
 		// Prints the board first.
 		boardView.printBoard();
 
+		// Prompt the user if they want to keep playing
+		cout << "Do you want to keep playing or save the game? (S for save/ any for keep playing):: ";
+		cin >> userInput;
+
+		if (userInput == 'S' || userInput == 's') {
+			return false;
+		}
+
 
 		// Randomly assigns the turn of the player. Currently, its just user first.
 		if (!isComputersTurn) {
-			//cout << "It is your turn. Please make a move " << endl;
-			// Asks for user's move
-			
+
 			Dice * returnedDice = humanP->play(board);
 
 			if (returnedDice != NULL) {
@@ -83,13 +89,7 @@ bool game::startGame() {
 		// TODO: change the player's turn
 		isComputersTurn = !isComputersTurn;
 
-		// Prompt the user if they want to keep playing
-		cout << "Do you want to keep playing or save the game? (S for save):: ";
-		cin >> userInput;
-
-		if (userInput == 'S' || userInput == 's') {
-			return false;
-		}
+		
 
 
 	}

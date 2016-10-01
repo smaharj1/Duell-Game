@@ -19,6 +19,7 @@ tournament::~tournament()
 void tournament::printWelcomeMessage() {
 	cout << "Welcome to the wonderful game of Duell" << endl;
 	cout << "We are very delighted that you chose to play this game" << endl;
+	cout << "---------------------------x---------------------------" << endl;
 }
 
 void tournament::startGame() {
@@ -57,7 +58,7 @@ void tournament::startGame() {
 
 		}
 
-		cout << "Do you want to play another game (Y/N)? :: " << endl;
+		cout << "----Do you want to play another game (Y/N)? :: " << endl;
 		cin >> userInput;
 	}
 }

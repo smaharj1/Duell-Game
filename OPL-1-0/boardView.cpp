@@ -12,6 +12,7 @@ BoardView::~BoardView()
 }
 
 void BoardView::printBoard() {
+	cout << endl << "-------------------------------------x----------------------------------" << endl;
 	for (int i = 0; i <= board->getTotalRows(); i++) {
 		if (i == board->getTotalRows()) {
 			cout << "   ";
@@ -38,7 +39,7 @@ void BoardView::printBoard() {
 			}
 			cout << endl;
 		}
-
 	}
+	cout << endl << "-------------------------------------x----------------------------------" << endl;
 	
 }
