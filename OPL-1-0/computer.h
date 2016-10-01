@@ -1,6 +1,7 @@
 #pragma once
 #include"player.h"
 #include "Board.h"
+#include"algorithm.h"
 using namespace std;
 
 class computer : public player

@@ -51,6 +51,17 @@ computer::~computer()
 }
 
 Dice * computer::play(Board * board) {
+	// Defend the king first.
+	if (algorithm::goDefence(board, true)) {
+
+	}
+	
+
+	// If it is defended, see if you can attack.
+
+	// If nothing is attackable, do best first search.
+
+
 	cout << "computer's turn to play !!!" << endl;
 	return NULL;
 }

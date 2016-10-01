@@ -198,11 +198,6 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 		return false;
 	}
 
-	// Checks if the dice is rolled forward or backward and assigns the rolling accordingly.
-	
-
-	// Checks if the dice is rolled right or left and assigns the rolling accordingly.
-
 	int i = 0;
 
 	// If it is the computer, then do the increments accordingly and check in each location
