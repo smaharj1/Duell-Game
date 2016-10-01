@@ -9,7 +9,7 @@ class player
 public:
 	player();
 	~player();
-	virtual void play(Board * board) { cout << "Base class can't play" << endl; };
+	virtual Dice * play(Board * board) { cout << "Base class can't play" << endl; return NULL; };
 
 	int getRow();
 	int getColumn();

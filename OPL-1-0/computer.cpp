@@ -11,6 +11,7 @@ computer::~computer()
 {
 }
 
-void computer::play(Board * board) {
+Dice * computer::play(Board * board) {
 	cout << "computer's turn to play !!!" << endl;
+	return NULL;
 }

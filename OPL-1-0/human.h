@@ -8,7 +8,7 @@ class human : public player
 public:
 	human();
 	~human();
-	void play(Board * board);
+	Dice * play(Board * board);
 
 private:
 	Dice * humanDices[9];

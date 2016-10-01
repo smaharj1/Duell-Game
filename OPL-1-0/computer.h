@@ -8,7 +8,7 @@ class computer : public player
 public:
 	computer();
 	~computer();
-	void play(Board * board);
+	Dice * play(Board * board);
 
 private:
 	Dice * computerDices[9];

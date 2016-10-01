@@ -13,7 +13,7 @@ human::~human()
 
 }
 
-void human::play(Board * board) {
+Dice * human::play(Board * board) {
 	row = -1; column = -1; newRow = -1; newCol = -1;
 	char direction;
 
@@ -65,6 +65,7 @@ void human::play(Board * board) {
 
 
 	// If it returns true while moving, it means that the player moving won other player's dice.
-	//Dice * returnedDice = board->move(row, column, newRow, newCol);
+	Dice * returnedDice = board->move(row, column, newRow, newCol);
 
+	return returnedDice;
 }
