@@ -118,7 +118,7 @@ Dice * human::play(Board * board) {
 	// If it returns true while moving, it means that the player moving won other player's dice.
 	Dice * returnedDice = board->move(row, column, newRow, newCol, direction);
 
-	printMove(row, column, newRow, newCol, direction);
+	printMove(9-row, column, 9-newRow, newCol, false, direction);
 
 	return returnedDice;
 }
