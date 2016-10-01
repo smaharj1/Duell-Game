@@ -23,7 +23,7 @@ void tournament::printWelcomeMessage() {
 
 void tournament::startGame() {
 	char userInput;
-	cout << "Do you want to start a new game (Y/N)? :: " << endl;
+	cout << "Do you want to start a new game (Y/N) or open existing (O)? :: " << endl;
 	cin >> userInput;
 	game * newGame;
 
@@ -31,7 +31,7 @@ void tournament::startGame() {
 
 	userInput = tolower(userInput);
 	while (userInput == 'y' || userInput == 'o') {
-		
+
 		if (userInput == 'y') {
 			totalGames++;
 			newGame = new game();
