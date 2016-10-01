@@ -26,10 +26,13 @@ game::game(Board * tempBoard, bool computersTurn) {
 	isComputersTurn = computersTurn;
 
 	boardView.setBoard(board);
+
+	humanP = new human(board);
+	bot = new computer(board);
+
 	isDone = false;
 	computerWin = true;
-	humanP = new human();
-	bot = new computer();
+	
 }
 
 game::~game()

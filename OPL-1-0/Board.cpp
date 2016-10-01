@@ -49,7 +49,8 @@ void Board::setBoard(string tempBoard[][9]) {
 				board[i][j] = new Cell();
 			}
 			else {
-				board[i][j] = new Cell(new Dice(tempBoard[i][j]));
+				Dice * d = new Dice(tempBoard[i][j]);
+				board[i][j] = new Cell(d);
 			}
 		}
 	}

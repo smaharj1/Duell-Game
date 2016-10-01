@@ -8,6 +8,7 @@ class computer : public player
 public:
 	computer();
 	computer(int keys[], int size);
+	computer(Board * board);
 	~computer();
 	Dice * play(Board * board);
 

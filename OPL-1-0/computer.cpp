@@ -25,6 +25,27 @@ computer::computer(int keys[], int size) {
 	}
 }
 
+computer::computer(Board * board) {
+	Dice * tmp;
+	int diceIndex = 0;
+	for (int row = 0; row < board->getTotalRows(); row++) {
+		for (int col = 0; col < board->getTotalColumns(); col++) {
+			tmp = board->getCell(row, col)->getDice();
+			if (tmp != NULL) {
+				if (!tmp->isPlayerComputer()) {
+					computerDices[diceIndex] = tmp;
+					diceIndex++;
+				}
+			}
+		}
+	}
+
+	// This nullifies the remaining dice locations. It means the dices are eaten.
+	for (int i = diceIndex; i < 9; i++) {
+		computerDices[i] = NULL;
+	}
+}
+
 computer::~computer()
 {
 }

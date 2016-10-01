@@ -4,13 +4,18 @@
 
 Dice::Dice(string given)
 {
-	front = DICE_FRONT;
-	if (given.at(1) == '1' && given.at(2) == '1') {
-		setAsKing(given);
+	top = given.at(1)-'0';
+	right= given.at(2) -'0';
+
+	if (top == right) {
+		setKing();
 	}
 	else {
-		setValue(given);
+		front = computeFrontFace(top, right);
 	}
+
+	isComputer = given.at(0) == 'C' ? true : false;
+
 }
 
 Dice::Dice(bool isComputer, int topFace, int frontFace, int rightFace) {

@@ -8,10 +8,13 @@ class human : public player
 public:
 	human();
 	human(int keys[], int size);
+	human(Board * board);
 	~human();
 	Dice * play(Board * board);
 
 	Dice ** getDices() { return humanDices; }
+
+
 
 private:
 	Dice * humanDices[9];

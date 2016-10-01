@@ -27,6 +27,28 @@ human::human(int keys[], int size)
 	}
 }
 
+human::human(Board * board) {
+	Dice * tmp;
+	int diceIndex = 0;
+	for (int row = 0; row < board->getTotalRows(); row++) {
+		for (int col = 0; col < board->getTotalColumns(); col++) {
+			tmp = board->getCell(row, col)->getDice();
+			if (tmp != NULL) {
+				if (!tmp->isPlayerComputer()) {
+					humanDices[diceIndex] = tmp;
+					diceIndex++;
+				}
+			}
+		}
+	}
+
+	// This nullifies the remaining dice locations. It means the dices are eaten.
+	for (int i = diceIndex; i < 9; i++) {
+		humanDices[i] = NULL;
+	}
+}
+
+
 human::~human()
 {
 
