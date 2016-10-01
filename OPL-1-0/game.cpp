@@ -5,9 +5,10 @@
 */
 game::game()
 {
+	int given[9] = { 5, 1, 2, 6, 1, 6, 2, 1, 5 };
 	// Assign players here
-	humanP = new human();
-	bot = new computer();
+	humanP = new human(given, 9);
+	bot = new computer(given, 9);
 
 	board = new Board();
 

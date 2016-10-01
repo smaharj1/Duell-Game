@@ -7,6 +7,7 @@ class computer : public player
 {
 public:
 	computer();
+	computer(int keys[], int size);
 	~computer();
 	Dice * play(Board * board);
 
