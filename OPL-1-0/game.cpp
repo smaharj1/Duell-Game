@@ -5,12 +5,13 @@
 */
 game::game()
 {
-	int given[9] = { 5, 1, 2, 6, 1, 6, 2, 1, 5 };
+	const int SIZE = 9;
+	int given[SIZE] = { 5, 1, 2, 6, 1, 6, 2, 1, 5 };
 	// Assign players here
-	humanP = new human(given, 9);
-	bot = new computer(given, 9);
+	humanP = new human(given, SIZE);
+	bot = new computer(given, SIZE);
 
-	board = new Board();
+	board = new Board(humanP->getDices(), bot->getDices(), SIZE);
 
 	boardView.setBoard(board);
 

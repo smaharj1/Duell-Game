@@ -22,7 +22,9 @@ Board::Board()
 	}
 }
 
-
+Board::Board(Dice ** human, Dice ** bot, int size) {
+	
+}
 
 Board::~Board()
 {

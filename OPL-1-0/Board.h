@@ -9,7 +9,7 @@ class Board
 {
 public:
 	Board();
-	//Board(player * humanP, player * bot);
+	Board(Dice ** human, Dice ** bot, int size);
 	~Board();
 	
 	int getTotalRows() { return ROWS; }
