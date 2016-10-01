@@ -23,7 +23,19 @@ Board::Board()
 }
 
 Board::Board(Dice ** human, Dice ** bot, int size) {
-	
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLUMNS; j++) {
+			if (i == 0) {
+				board[i][j] = new Cell(bot[j]);
+			}
+			else if (i == ROWS - 1) {
+				board[i][j] = new Cell(human[j]);
+			}
+			else {
+				board[i][j] = new Cell();
+			}
+		}
+	}
 }
 
 Board::~Board()
