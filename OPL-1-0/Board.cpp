@@ -205,8 +205,7 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 		return false;
 	}
 
-	//cout << "Dice is " << board[row][col]->getDice()->getValue() << " and moving to " << newRow << "," << newCol << endl;
-
+	
 	// At this point, it is obvious that the frontal and side are going to be good.
 	if (board[row][col]->getDice()->getTop() != abs(frontal) + abs(side)) {
 		if (!godMode) {
@@ -228,10 +227,13 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 
 	for (i = 1; i <= abs(frontal); i++) {
 		// This is if its the main location, just ignore this step.
-		if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
+		//if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
 
 		int j = frontal < 0 ? -i : i;
 		tempRow = row + j;
+
+		if (tempRow + 1 == newRow && tempCol + 1 == newCol) continue;
+
 		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
 	}
 
@@ -248,10 +250,13 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 
 	for (i = 1; i <= abs(side); i++) {
 		// This is if its the main location, just ignore this step.
-		if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
+		//if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
 
 		int j = side < 0 ? -i : i;
 		tempCol = col + j;
+		
+		if (tempRow + 1 == newRow && tempCol + 1 == newCol) continue;
+		
 		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;
 	}
 	if (correctPaths[1] == true) {

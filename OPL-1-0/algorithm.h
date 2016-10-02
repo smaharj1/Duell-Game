@@ -9,17 +9,18 @@ class algorithm
 public:
 	algorithm();
 	algorithm(Board * board, bool isComputer);
-	bool goDefence(Board * board, bool isComputer);
 
-	void refreshPlayers(Board * board, bool isComputer);
-	bool canEatThreat(Board * board);
-	bool canMoveKing(Board * board, bool isComputer);
-	bool kingInThreat(Board * board);
-	bool canEatOpponent(Board * board);
+	void refreshPlayers( bool isComputer);
+	bool canEatThreat();
+	bool canMoveKing(bool isComputer);
+	bool kingInThreat();
+	bool canEatOpponent();
 
-	bool canWin(Board * board);
+	bool canWin();
+	bool safeOffense();
 
-	bool canEat(Board *board,treeNode * diceToEat);
+	bool canEat(vector<treeNode *> current, treeNode * diceToEat);
+	bool canReachLocation(vector<treeNode *> playerNodes, int row, int col);
 
 	treeNode * getSuggestedMoves() { return suggestedMove; }
 	location * getSuggestedLocation() { return suggestedNewLocation; }
@@ -28,6 +29,8 @@ public:
 private:
 	treeNode * getCurrentPlayersKing();
 	treeNode * getOpponentsKing();
+
+	Board * board;
 
 	treeNode * threateningNode;
 	treeNode * suggestedMove;

@@ -5,27 +5,13 @@ algorithm::algorithm()
 }
 
 algorithm::algorithm(Board * board, bool isComputer) {
-	refreshPlayers(board, isComputer);
+	this->board = board;
+	refreshPlayers(isComputer);
 	algoForComputer = isComputer;
 }
 
-bool algorithm::goDefence(Board * board, bool isComputer) {
-	// Check for imminent threat by other player.
-	if (kingInThreat(board)) {
-		// Move the king if there is an imminent threat
-		if (canEatThreat(board) ) {
-			return true;
-		}
-		else return false;
-	}
-	// If there is no threat, then see the king can be surrounded for obstruction.
 
-	// If both of these are not the scenarios, return false
-
-	return false;
-}
-
-bool algorithm::canMoveKing(Board * board, bool isComputer) {
+bool algorithm::canMoveKing( bool isComputer) {
 	treeNode * playerKing = getCurrentPlayersKing();
 	
 	int front = playerKing->getRow()+1;
@@ -93,35 +79,24 @@ treeNode * algorithm::getOpponentsKing() {
 	return NULL;
 }
 
-bool algorithm::canEatThreat(Board * board) {
+bool algorithm::canEatThreat() {
 	if (threateningNode == NULL) {
 		return false;
 	}
 
 	// At this point, threatening node is not null.
 	// Loop through each dice of players and see if you can eat threatening node.
-	if (canEat(board, threateningNode)) {
+	if (canEat(currentPlayer, threateningNode)) {
 		return true;
 	}
 	
-	/*
-	for (int index = 0; index < currentPlayer.size(); index++) {
-		treeNode * tempNode = currentPlayer[index];
-		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), threateningNode->getRow(), threateningNode->getColumn(), true)) {
-			suggestedMove = tempNode;
-			suggestedNewLocation = threateningNode->getLocation();
-			return true;
-		}
-	}
-
-	*/
 	suggestedMove = NULL;
 	suggestedNewLocation = NULL;
 
 	return false;
 }
 
-bool algorithm::kingInThreat(Board * board) {
+bool algorithm::kingInThreat() {
 	treeNode * playerKing = getCurrentPlayersKing();
 
 	bool tempArray[2];
@@ -143,7 +118,7 @@ bool algorithm::kingInThreat(Board * board) {
 	return false;
 }
 
-void algorithm::refreshPlayers(Board * board, bool isComputer) {
+void algorithm::refreshPlayers( bool isComputer) {
 	opponentPlayer.clear();
 	currentPlayer.clear();
 
@@ -163,7 +138,7 @@ void algorithm::refreshPlayers(Board * board, bool isComputer) {
 	}
 }
 
-bool algorithm::canWin(Board * board) {
+bool algorithm::canWin() {
 	treeNode * opponentKing = getOpponentsKing();
 	location * winLocation = algoForComputer ? new location(7, 4) : new location(0, 4);
 
@@ -189,12 +164,12 @@ bool algorithm::canWin(Board * board) {
 }
 
 
-bool algorithm::canEat(Board * board, treeNode * diceToEat) {
+bool algorithm::canEat(vector<treeNode *> current, treeNode * diceToEat) {
 	suggestedMove = NULL;
 	suggestedNewLocation = NULL;
 
-	for (int index = 0; index < currentPlayer.size(); index++) {
-		treeNode * tempNode = currentPlayer[index];
+	for (int index = 0; index < current.size(); index++) {
+		treeNode * tempNode = current[index];
 		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), diceToEat->getRow(), diceToEat->getColumn(), true)) {
 			suggestedMove = tempNode;
 			suggestedNewLocation = diceToEat->getLocation();
@@ -205,7 +180,7 @@ bool algorithm::canEat(Board * board, treeNode * diceToEat) {
 	return false;
 }
 
-bool algorithm::canEatOpponent(Board * board) {
+bool algorithm::canEatOpponent() {
 	suggestedMove = NULL;
 	suggestedNewLocation = NULL;
 
@@ -214,8 +189,47 @@ bool algorithm::canEatOpponent(Board * board) {
 	for (int oppIndex = 0; oppIndex < opponentPlayer.size(); oppIndex++) {
 		treeNode * tmpNode = opponentPlayer[oppIndex];
 
-		if (canEat(board, tmpNode)) {
+		if (canEat(currentPlayer, tmpNode)) {
 			return true;
+		}
+	}
+
+	return false;
+}
+
+// Checks if the location can be reached by the given tree nodes.
+bool algorithm::canReachLocation(vector<treeNode *> playerNodes, int row, int col) {
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	for (int index = 0; index < playerNodes.size(); index++) {
+		treeNode * tempNode = playerNodes[index];
+		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), row, col, true)) {
+			suggestedMove = tempNode;
+			suggestedNewLocation = new location(row,col);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool algorithm::safeOffense() {
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	if (algoForComputer) {
+		for (int row = board->getTotalRows() - 1; row >= 0; row--) {
+			for (int col = 0; col < board->getTotalColumns(); col++) {
+				// Check if any opponent player nodes can reach this location. 
+				// If yes, then move on. If no, then check if current player can move their dice to this location.
+				if (!canReachLocation(opponentPlayer, row, col)) {
+					if (canReachLocation(currentPlayer, row, col)) {
+						// At this point, the suggested move and location will already have been set.
+						return true;
+					}
+				}
+			}
 		}
 	}
 

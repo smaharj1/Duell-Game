@@ -56,7 +56,7 @@ Dice * computer::play(Board * board) {
 	location * suggestedLocation;
 
 	// First, check if the bot can win.
-	if (algo->canWin(board)) {
+	if (algo->canWin()) {
 		suggestedMove = algo->getSuggestedMoves();
 		suggestedLocation = algo->getSuggestedLocation();
 
@@ -67,8 +67,8 @@ Dice * computer::play(Board * board) {
 	}
 
 	// Defend the king first.
-	if (algo->kingInThreat(board)) {
-		if (algo->canEatThreat(board)) {
+	if (algo->kingInThreat()) {
+		if (algo->canEatThreat()) {
 			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
 			suggestedMove = algo->getSuggestedMoves();
 			suggestedLocation = algo->getSuggestedLocation();
@@ -78,7 +78,7 @@ Dice * computer::play(Board * board) {
 			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 			return d;
 		}
-		else if (algo->canMoveKing(board, true)) {
+		else if (algo->canMoveKing(true)) {
 			// Try to move the king to escape.
 			suggestedMove = algo->getSuggestedMoves();
 			suggestedLocation = algo->getSuggestedLocation();
@@ -89,7 +89,17 @@ Dice * computer::play(Board * board) {
 	}
 
 	// If the king does not have any threat, try to eat other players
-	if (algo->canEatOpponent(board)) {
+	if (algo->canEatOpponent()) {
+		suggestedMove = algo->getSuggestedMoves();
+		suggestedLocation = algo->getSuggestedLocation();
+		printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
+		cout << "-------How do you like them apples?---------" << endl;
+		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+		return d;
+	}
+
+	// If nothing is attackable, move the dice closest to opponent where opponent can't eat.
+	if (algo->safeOffense()) {
 		suggestedMove = algo->getSuggestedMoves();
 		suggestedLocation = algo->getSuggestedLocation();
 		printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
@@ -97,8 +107,7 @@ Dice * computer::play(Board * board) {
 		return d;
 	}
 
-	// If nothing is attackable, do best first search.
-
+	// Pick random location and move it (NO CHOICE Stage).
 
 	return NULL;
 }
