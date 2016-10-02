@@ -15,8 +15,11 @@ public:
 	bool canEatThreat(Board * board);
 	bool canMoveKing(Board * board, bool isComputer);
 	bool kingInThreat(Board * board);
+	bool canEatOpponent(Board * board);
 
 	bool canWin(Board * board);
+
+	bool canEat(Board *board,treeNode * diceToEat);
 
 	treeNode * getSuggestedMoves() { return suggestedMove; }
 	location * getSuggestedLocation() { return suggestedNewLocation; }

@@ -26,6 +26,7 @@ public:
 	Dice * moveFromAlgo(int row, int col, int newRow, int newCol);
 
 	void setBoard(string tempBoard[][9]);
+	bool setGodMode(bool given);
 
 private:
 	Cell * board[8][9];

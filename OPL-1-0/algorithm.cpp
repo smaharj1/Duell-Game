@@ -100,6 +100,11 @@ bool algorithm::canEatThreat(Board * board) {
 
 	// At this point, threatening node is not null.
 	// Loop through each dice of players and see if you can eat threatening node.
+	if (canEat(board, threateningNode)) {
+		return true;
+	}
+	
+	/*
 	for (int index = 0; index < currentPlayer.size(); index++) {
 		treeNode * tempNode = currentPlayer[index];
 		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), threateningNode->getRow(), threateningNode->getColumn(), true)) {
@@ -109,6 +114,7 @@ bool algorithm::canEatThreat(Board * board) {
 		}
 	}
 
+	*/
 	suggestedMove = NULL;
 	suggestedNewLocation = NULL;
 
@@ -175,6 +181,40 @@ bool algorithm::canWin(Board * board) {
 		else if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), winLocation->getRow(), winLocation->getColumn(), true)) {
 			suggestedMove = tempNode;
 			suggestedNewLocation = winLocation;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+bool algorithm::canEat(Board * board, treeNode * diceToEat) {
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	for (int index = 0; index < currentPlayer.size(); index++) {
+		treeNode * tempNode = currentPlayer[index];
+		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), diceToEat->getRow(), diceToEat->getColumn(), true)) {
+			suggestedMove = tempNode;
+			suggestedNewLocation = diceToEat->getLocation();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool algorithm::canEatOpponent(Board * board) {
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	// Go to each opponent and check if any current player dices can eat the opponent.
+	// Return true if it can eat.
+	for (int oppIndex = 0; oppIndex < opponentPlayer.size(); oppIndex++) {
+		treeNode * tmpNode = opponentPlayer[oppIndex];
+
+		if (canEat(board, tmpNode)) {
 			return true;
 		}
 	}

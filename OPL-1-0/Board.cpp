@@ -42,6 +42,11 @@ Board::~Board()
 {
 }
 
+bool Board::setGodMode(bool given) {
+	godMode = false;
+	return true;
+}
+
 void Board::setBoard(string tempBoard[][9]) {
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
@@ -222,6 +227,9 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 	if (abs(side) == 0) correctPaths[1] = false;
 
 	for (i = 1; i <= abs(frontal); i++) {
+		// This is if its the main location, just ignore this step.
+		if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
+
 		int j = frontal < 0 ? -i : i;
 		tempRow = row + j;
 		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[0] = false;
@@ -239,6 +247,9 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 	tempCol = col;
 
 	for (i = 1; i <= abs(side); i++) {
+		// This is if its the main location, just ignore this step.
+		if (col + 1 + side == newCol && row + 1 + frontal == newRow) continue;
+
 		int j = side < 0 ? -i : i;
 		tempCol = col + j;
 		if (!board[tempRow][tempCol]->isEmpty()) correctPaths[1] = false;

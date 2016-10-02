@@ -88,7 +88,14 @@ Dice * computer::play(Board * board) {
 		}
 	}
 
-	// If there is no threat for the king, see if you can attack and eat other team.
+	// If the king does not have any threat, try to eat other players
+	if (algo->canEatOpponent(board)) {
+		suggestedMove = algo->getSuggestedMoves();
+		suggestedLocation = algo->getSuggestedLocation();
+		printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
+		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+		return d;
+	}
 
 	// If nothing is attackable, do best first search.
 

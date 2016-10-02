@@ -59,6 +59,8 @@ Dice * human::play(Board * board) {
 	char direction;
 
 	cout << "It is your turn. Please make a move " << endl;
+	board->setGodMode(false);
+
 	// Asks for user's move
 	do {
 		char r, c, newR, newC;
