@@ -2,11 +2,16 @@
 
 
 
-TreeNode::TreeNode()
+treeNode::treeNode()
 {
 }
 
+treeNode::treeNode(Dice * d, int row, int col) {
+	currentDice = d;
+	currentLocation = new location(row, col);
+	previousNode = NULL;
+}
 
-TreeNode::~TreeNode()
+treeNode::~treeNode()
 {
 }

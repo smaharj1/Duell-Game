@@ -51,10 +51,28 @@ computer::~computer()
 }
 
 Dice * computer::play(Board * board) {
-	// Defend the king first.
-	if (algorithm::goDefence(board, true)) {
+	algorithm * algo = new algorithm();
+	treeNode * suggestedMove;
+	location * suggestedLocation;
 
+	// Defend the king first.
+	if (algo->kingInThreat(board, true)) {
+		if (algo->canEat(board, true)) {
+			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
+			suggestedMove = algo->getSuggestedMoves();
+			suggestedLocation = algo->getSuggestedLocation();
+
+			cout << "Computer is moving " << suggestedMove->getDice()->getValue() << " from " << 8-suggestedMove->getRow() << "," << suggestedMove->getColumn()+1
+				<< " to " << (8 - suggestedLocation->getRow()) << "," << suggestedLocation->getColumn()+1
+				<< " to clean up the mess by opponent" << endl;
+			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+		}
+		else {
+			// Move the king
+			algo->canMoveKing(board, true);
+		}
 	}
+
 	
 
 	// If it is defended, see if you can attack.
@@ -62,6 +80,5 @@ Dice * computer::play(Board * board) {
 	// If nothing is attackable, do best first search.
 
 
-	cout << "computer's turn to play !!!" << endl;
 	return NULL;
 }

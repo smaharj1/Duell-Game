@@ -53,6 +53,7 @@ bool game::startGame() {
 		// Prints the board first.
 		boardView.printBoard();
 
+		/*
 		// Prompt the user if they want to keep playing
 		cout << "Do you want to keep playing or save the game? (S for save/ any for keep playing):: ";
 		cin >> userInput;
@@ -60,7 +61,7 @@ bool game::startGame() {
 		if (userInput == 'S' || userInput == 's') {
 			return false;
 		}
-
+		*/
 
 		// Randomly assigns the turn of the player. Currently, its just user first.
 		if (!isComputersTurn) {
@@ -72,6 +73,9 @@ bool game::startGame() {
 				if (returnedDice->isPlayerKing()) {
 					isDone = true;
 					computerWin = false;
+					cout << "####-----------------####--------------------####" << endl;
+					cout << "YOU WON!!!!!!!!!!!!" << endl;
+					cout << "Go brag about it! You won the computer!" << endl << endl;
 				}
 				else {
 					returnedDice->setKilled();
@@ -89,10 +93,9 @@ bool game::startGame() {
 		// TODO: change the player's turn
 		isComputersTurn = !isComputersTurn;
 
-		
-
-
 	}
+
+	return true;
 }
 
 bool game::isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer) {

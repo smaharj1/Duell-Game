@@ -21,6 +21,8 @@ public:
 
 	bool isLegal(int row, int column, int newRow, int newCol, bool isComputer);
 	bool isPathGood(int row, int col, int newRow, int newCol, bool correctPaths[]);
+	bool checkPathForAlgo(int row, int col, int newRow, int newCol, bool isGodMode);
+	Dice * moveFromAlgo(int row, int col, int newRow, int newCol);
 
 	void setBoard(string tempBoard[][9]);
 
@@ -35,7 +37,7 @@ private:
 	const int COLUMN_LOW_LIMIT = 1;
 	const int COLUMN_HIGH_LIMIT = 9;
 
-	
+	bool godMode;
 
 };
 

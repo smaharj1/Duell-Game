@@ -142,7 +142,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol, char direction) 
 	// Adds the dice to the Cell and removes the dice from previous location.
 
 	if (!board[newRow - 1][newCol - 1]->isEmpty()) {
-		cout << "Dice is eaten!" << endl << endl;
+		//cout << "Dice is eaten!" << endl << endl;
 		diceAte = board[newRow - 1][newCol - 1]->getDice();
 		board[newRow - 1][newCol - 1]->removeDice();
 	}
@@ -192,9 +192,13 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 		return false;
 	}
 
+	//cout << "Dice is " << board[row][col]->getDice()->getValue() << " and moving to " << newRow << "," << newCol << endl;
+
 	// At this point, it is obvious that the frontal and side are going to be good.
 	if (board[row][col]->getDice()->getTop() != abs(frontal) + abs(side)) {
-		cout << "The dice cannot make that movement due to mismatch of distance" << endl;
+		if (!godMode) {
+			cout << "The dice cannot make that movement due to mismatch of distance" << endl;
+		}
 		return false;
 	}
 
@@ -239,7 +243,37 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 	}
 		
 	if (!correctPaths[0] && !correctPaths[1]) {
-		cout << "There are hindrances on the path" << endl;
+		if (!godMode) {
+			cout << "There are hindrances on the path" << endl;
+		}
 	}
+
+	godMode = false;
 	return correctPaths[0] || correctPaths[1];
+}
+
+// The parameters bring in the rows and cols as computer's index i.e. it starts from 0.
+bool Board::checkPathForAlgo(int row, int col, int newRow, int newCol, bool isGodMode) {
+	godMode = isGodMode;
+	bool tempDir[2];
+	tempDir[0] = true;
+	tempDir[1] = true;
+
+	return isPathGood(row + 1, col + 1, newRow + 1, newCol + 1, tempDir);
+}
+
+// Index in parameter starts from 0.
+Dice * Board::moveFromAlgo(int row, int col, int newRow, int newCol) {
+	bool tempDir[2];
+	tempDir[0] = true;
+	tempDir[1] = true;
+	char direction = 'f';
+
+	isPathGood(row + 1, col + 1, newRow + 1, newCol + 1, tempDir);
+
+	if (tempDir[0] == false) {
+		direction = 'l';
+	}
+
+	return move(row + 1, col + 1, newRow + 1, newCol + 1, direction);
 }
