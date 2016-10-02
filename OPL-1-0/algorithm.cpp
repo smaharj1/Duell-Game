@@ -6,7 +6,9 @@ algorithm::algorithm()
 
 algorithm::algorithm(Board * board, bool isComputer) {
 	refreshPlayers(board, isComputer);
+	algoForComputer = isComputer;
 }
+
 bool algorithm::goDefence(Board * board, bool isComputer) {
 	// Check for imminent threat by other player.
 	if (kingInThreat(board)) {
@@ -114,13 +116,7 @@ bool algorithm::canEatThreat(Board * board) {
 }
 
 bool algorithm::kingInThreat(Board * board) {
-	treeNode * playerKing;
-
-	for (int i = 0; i < currentPlayer.size(); i++) {
-		if (currentPlayer[i]->getDice()->isPlayerKing()) {
-			playerKing = currentPlayer[i];
-		}
-	}
+	treeNode * playerKing = getCurrentPlayersKing();
 
 	bool tempArray[2];
 	tempArray[0] = true;
@@ -159,4 +155,29 @@ void algorithm::refreshPlayers(Board * board, bool isComputer) {
 			}
 		}
 	}
+}
+
+bool algorithm::canWin(Board * board) {
+	treeNode * opponentKing = getOpponentsKing();
+	location * winLocation = algoForComputer ? new location(7, 4) : new location(0, 4);
+
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	for (int index = 0; index < currentPlayer.size(); index++) {
+		treeNode * tempNode = currentPlayer[index];
+
+		if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), opponentKing->getRow(), opponentKing->getColumn(), true)) {
+			suggestedMove = tempNode;
+			suggestedNewLocation = opponentKing->getLocation();
+			return true;
+		}
+		else if (board->checkPathForAlgo(tempNode->getRow(), tempNode->getColumn(), winLocation->getRow(), winLocation->getColumn(), true)) {
+			suggestedMove = tempNode;
+			suggestedNewLocation = winLocation;
+			return true;
+		}
+	}
+
+	return false;
 }

@@ -86,7 +86,22 @@ bool game::startGame() {
 		else {
 			cout << "It is computer's turn." << endl;
 
-			bot->play(board);
+			Dice * returnedDice = bot->play(board);
+
+			if (returnedDice != NULL) {
+				// Here, the dice that was lost is returned.
+				if (returnedDice->isPlayerKing()) {
+					isDone = true;
+					computerWin = true;
+					cout << "####-----------------####--------------------####" << endl;
+					cout << "Computer WON!!!!!!!!!!!!" << endl;
+					cout << "Sorry! Better be smart first" << endl << endl;
+				}
+				else {
+					returnedDice->setKilled();
+				}
+			}
+
 		}
 
 		

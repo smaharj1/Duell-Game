@@ -160,6 +160,7 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 		if (!godMode) {
 			cout << "The selection is empty." << endl;
 		}
+		godMode = false;
 		return false;
 	}
 
@@ -170,6 +171,7 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 		if (!godMode) {
 			cout << "You cannot move other players dice." << endl;
 		}
+		godMode = false;
 		return false;
 	}
 
@@ -177,10 +179,12 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 		if ((board[row - 1][column - 1]->getDice()->isPlayerComputer() && board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) ||
 			!board[row - 1][column - 1]->getDice()->isPlayerComputer() && !board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) {
 			if (!godMode) { cout << "You cannot replace your own player" << endl; }
+			godMode = false;
 			return false;
 		}
 	}
 
+	godMode = false;
 	return true;
 }
 
@@ -203,6 +207,7 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 		if (!godMode) {
 			cout << "The dice cannot make that movement due to mismatch of distance" << endl;
 		}
+		godMode = false;
 		return false;
 	}
 
@@ -250,6 +255,7 @@ bool Board::isPathGood(int row, int col, int newRow, int newCol, bool correctPat
 		if (!godMode) {
 			cout << "There are hindrances on the path" << endl;
 		}
+		godMode = false;
 	}
 
 	godMode = false;

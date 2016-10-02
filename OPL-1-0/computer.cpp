@@ -55,6 +55,17 @@ Dice * computer::play(Board * board) {
 	treeNode * suggestedMove;
 	location * suggestedLocation;
 
+	// First, check if the bot can win.
+	if (algo->canWin(board)) {
+		suggestedMove = algo->getSuggestedMoves();
+		suggestedLocation = algo->getSuggestedLocation();
+
+		printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
+		
+		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+		return d;
+	}
+
 	// Defend the king first.
 	if (algo->kingInThreat(board)) {
 		if (algo->canEatThreat(board)) {

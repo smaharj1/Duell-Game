@@ -16,6 +16,8 @@ public:
 	bool canMoveKing(Board * board, bool isComputer);
 	bool kingInThreat(Board * board);
 
+	bool canWin(Board * board);
+
 	treeNode * getSuggestedMoves() { return suggestedMove; }
 	location * getSuggestedLocation() { return suggestedNewLocation; }
 
@@ -30,5 +32,7 @@ private:
 
 	vector<treeNode *> currentPlayer;
 	vector<treeNode *> opponentPlayer;
+
+	bool algoForComputer;
 
 };
