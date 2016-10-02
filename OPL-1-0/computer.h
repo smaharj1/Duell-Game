@@ -12,7 +12,7 @@ public:
 	computer(Board * board);
 	~computer();
 	Dice * play(Board * board);
-
+	void printIt(Dice * givenDice, int row, int column, int newRow, int newCol, GameCondition condition);
 	Dice ** getDices() { return computerDices; }
 
 private:

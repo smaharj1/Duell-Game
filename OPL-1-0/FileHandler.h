@@ -13,16 +13,15 @@ using namespace std;
 class FileHandler
 {
 public:
-	FileHandler(string filename);
+	FileHandler();
 	~FileHandler();
 
-	void saveGame(Board * board, bool isComputer, int computerScore, int humanScore);
-	void openGame(Board * tempBoard, bool &isComputersTurn, int &computerScore, int &humanScore);
+	void saveGame(string filename, Board * board, bool isComputer, int computerScore, int humanScore);
+	void openGame(string filename, Board * tempBoard, bool &isComputersTurn, int &computerScore, int &humanScore);
 
 	
 
 private :
-	string filename;
 	ofstream ofile;
 	ifstream ifile;
 

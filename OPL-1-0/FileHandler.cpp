@@ -2,9 +2,8 @@
 
 
 
-FileHandler::FileHandler(string filename)
+FileHandler::FileHandler()
 {
-	this->filename = filename;
 }
 
 
@@ -12,7 +11,7 @@ FileHandler::~FileHandler()
 {
 }
 
-void FileHandler::saveGame(Board * board, bool isComputer, int computerScore, int humanScore) {
+void FileHandler::saveGame(string filename, Board * board, bool isComputer, int computerScore, int humanScore) {
 	ofile.open(filename);
 
 	if (!ofile) {
@@ -51,7 +50,7 @@ void FileHandler::saveGame(Board * board, bool isComputer, int computerScore, in
 
 }
 
-void FileHandler::openGame(Board * tempBoard, bool &isComputersTurn, int &computerScore, int &humanScore) {
+void FileHandler::openGame(string filename, Board * tempBoard, bool &isComputersTurn, int &computerScore, int &humanScore) {
 	ifile.open(filename);
 	string line;
 	int lineIndex = 0;

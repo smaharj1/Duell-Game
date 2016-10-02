@@ -8,7 +8,7 @@ tournament::tournament()
 	humanScore = 0;
 	computerScore = 0;
 
-	fileFunction = new FileHandler("game.txt");
+	fileFunction = new FileHandler();
 }
 
 
@@ -40,7 +40,8 @@ void tournament::startGame() {
 		else {
 			Board * tempBoard = new Board();
 			bool isComputersTurn;
-			fileFunction->openGame(tempBoard, isComputersTurn, computerScore, humanScore);
+			string filename = inputFile();
+			fileFunction->openGame(filename, tempBoard, isComputersTurn, computerScore, humanScore);
 
 			newGame = new game(tempBoard, isComputersTurn);
 		}
@@ -54,11 +55,40 @@ void tournament::startGame() {
 		}
 		else {
 			// Game needs to be saved.
-			fileFunction->saveGame(newGame->getBoard(), newGame->getIfComputerTurn(), computerScore, humanScore);
-
+			string filename = inputFile();
+			fileFunction->saveGame(filename, newGame->getBoard(), newGame->getIfComputerTurn(), computerScore, humanScore);
 		}
 
 		cout << "----Do you want to play another game (Y/N)? :: " << endl;
 		cin >> userInput;
+
+		userInput = tolower(userInput);
+		if (userInput == 'n') {
+			printScore();
+		}
 	}
+}
+
+string tournament::inputFile() {
+	string fileName;
+	cout << "Please enter the name of the file with the extension (.txt file needed):: ";
+	cin >> fileName;
+
+	return fileName;
+}
+
+void tournament::printScore() {
+	cout << "-------------Score board---------------" << endl;
+	cout << "Computer won: " << computerScore << endl;
+	cout << "Human won: " << humanScore << endl;
+	if (computerScore > humanScore) {
+		cout << "The winner is Computer!" << endl;
+	}
+	else if (computerScore < humanScore) {
+		cout << "You are the winner!" << endl;
+	}
+	else {
+		cout << "The game is a draw!" << endl;
+	}
+	cout << "---------------------------------------" << endl;
 }

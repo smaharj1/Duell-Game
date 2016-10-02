@@ -17,7 +17,7 @@ public:
 	int getNewRow();
 	int getNewCol();
 	static void printMove(int row, int column, int newRow, int newCol, bool isComputer, int direction);
-	static void printMove(int row, int column, int newRow, int newCol, bool isComputer);
+	
 protected:
 	int totalWins;
 
@@ -26,12 +26,18 @@ protected:
 
 	int isMoveInBound(int r, int c, int newR, int newC);
 
-
-
 	const int ROW_LOW_LIMIT = 1;
 	const int ROW_HIGH_LIMIT = 8;
 	const int COLUMN_LOW_LIMIT = 1;
 	const int COLUMN_HIGH_LIMIT = 9;
+
+	enum GameCondition {
+		CanWin,
+		CanEatKingsThreat,
+		MoveKing,
+		CanEatOpponent,
+		PlaySafe
+	};
 
 };
 

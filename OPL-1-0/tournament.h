@@ -13,11 +13,15 @@ public:
 	void printWelcomeMessage();
 	void startGame();
 
+	void printScore();
+
 private:
 	int totalGames;
 	int humanScore;
 	int computerScore;
 
 	FileHandler * fileFunction;
+
+	string inputFile();
 };
 

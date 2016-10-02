@@ -52,15 +52,3 @@ void player::printMove(int row, int column, int newRow, int newCol, bool isCompu
 	if (direction == 'f') cout << "frontal move first";
 	else cout << "lateral move first" << endl;
 }
-
-void player::printMove(int row, int column, int newRow, int newCol, bool isComputer) {
-	cout << "--------------------------------------------------------------" << endl;
-	if (isComputer) {
-		cout << "Computer ";
-	}
-	else {
-		cout << "You ";
-	}
-
-	cout << "moved the dice from (" << row << "," << column << ") to (" << newRow << "," << newCol << ")" << endl;
-}
