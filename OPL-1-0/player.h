@@ -17,6 +17,7 @@ public:
 	int getNewRow();
 	int getNewCol();
 	static void printMove(int row, int column, int newRow, int newCol, bool isComputer, int direction);
+	static void printMove(int row, int column, int newRow, int newCol, bool isComputer);
 protected:
 	int totalWins;
 

@@ -12,8 +12,8 @@ public:
 	bool goDefence(Board * board, bool isComputer);
 
 	void refreshPlayers(Board * board, bool isComputer);
-	bool canEat(Board * board);
-	bool canMoveKing(Board * board);
+	bool canEatThreat(Board * board);
+	bool canMoveKing(Board * board, bool isComputer);
 	bool kingInThreat(Board * board);
 
 	treeNode * getSuggestedMoves() { return suggestedMove; }

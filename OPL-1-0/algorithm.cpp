@@ -11,7 +11,7 @@ bool algorithm::goDefence(Board * board, bool isComputer) {
 	// Check for imminent threat by other player.
 	if (kingInThreat(board)) {
 		// Move the king if there is an imminent threat
-		if (canEat(board) ) {
+		if (canEatThreat(board) ) {
 			return true;
 		}
 		else return false;
@@ -23,17 +23,51 @@ bool algorithm::goDefence(Board * board, bool isComputer) {
 	return false;
 }
 
-bool algorithm::canMoveKing(Board * board) {
-	treeNode * playerKing;
+bool algorithm::canMoveKing(Board * board, bool isComputer) {
+	treeNode * playerKing = getCurrentPlayersKing();
 	
-	for (int i = 0; i < currentPlayer.size(); i++) {
-		if (currentPlayer[i]->getDice()->isPlayerKing()) {
-			playerKing = currentPlayer[i];
+	int front = playerKing->getRow()+1;
+	int back = playerKing->getRow() - 1;
+	int left = playerKing->getColumn() + 1;
+	int right = playerKing->getColumn() - 1;
+
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+
+	// For frontal move of king.
+	if (front < board->getTotalRows() && front >= 0) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), front, playerKing->getColumn(), isComputer)) {
+			suggestedMove = playerKing;
+			suggestedNewLocation = new location(front, playerKing->getColumn());
+			return true;
 		}
 	}
 	
+	if (back < board->getTotalRows() && back >= 0) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), back, playerKing->getColumn(), isComputer)) {
+			suggestedMove = playerKing;
+			suggestedNewLocation = new location(back, playerKing->getColumn());
+			return true;
+		}
+	}
 
-	return true;
+	if (left < board->getTotalColumns() && left >= 0) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), left, isComputer)) {
+			suggestedMove = playerKing;
+			suggestedNewLocation = new location(playerKing->getRow(), left);
+			return true;
+		}
+	}
+
+	if (right < board->getTotalColumns() && right>= 0) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), right, isComputer)) {
+			suggestedMove = playerKing;
+			suggestedNewLocation = new location(playerKing->getRow(), right);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 treeNode * algorithm::getCurrentPlayersKing() {
@@ -57,7 +91,7 @@ treeNode * algorithm::getOpponentsKing() {
 	return NULL;
 }
 
-bool algorithm::canEat(Board * board) {
+bool algorithm::canEatThreat(Board * board) {
 	if (threateningNode == NULL) {
 		return false;
 	}

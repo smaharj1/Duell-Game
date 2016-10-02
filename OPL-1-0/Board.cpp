@@ -157,7 +157,9 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 
 	// If the cell in the board is empty, return that it is empty.
 	if (board[row - 1][column - 1]->isEmpty()) {
-		cout << "The selection is empty." << endl;
+		if (!godMode) {
+			cout << "The selection is empty." << endl;
+		}
 		return false;
 	}
 
@@ -165,14 +167,16 @@ bool Board::isLegal(int row, int column, int newRow, int newCol, bool playerIsCo
 	bool isComputer = board[row - 1][column - 1]->getDice()->isPlayerComputer();
 
 	if (playerIsComputer != isComputer) {
-		cout << "You cannot move other players dice." << endl;
+		if (!godMode) {
+			cout << "You cannot move other players dice." << endl;
+		}
 		return false;
 	}
 
 	if (!board[newRow - 1][newCol - 1]->isEmpty()) {
 		if ((board[row - 1][column - 1]->getDice()->isPlayerComputer() && board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) ||
 			!board[row - 1][column - 1]->getDice()->isPlayerComputer() && !board[newRow - 1][newCol - 1]->getDice()->isPlayerComputer()) {
-			cout << "You cannot replace your own player" << endl;
+			if (!godMode) { cout << "You cannot replace your own player" << endl; }
 			return false;
 		}
 	}
@@ -276,4 +280,11 @@ Dice * Board::moveFromAlgo(int row, int col, int newRow, int newCol) {
 	}
 
 	return move(row + 1, col + 1, newRow + 1, newCol + 1, direction);
+}
+
+// Index starts at 0.
+bool Board::isLegalAlgo(int row, int column, int newRow, int newCol, bool isComputer) {
+	godMode = true;
+
+	return isLegal(row + 1, column + 1, newRow + 1, newCol + 1, isComputer);
 }

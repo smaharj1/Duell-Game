@@ -57,25 +57,27 @@ Dice * computer::play(Board * board) {
 
 	// Defend the king first.
 	if (algo->kingInThreat(board)) {
-		if (algo->canEat(board)) {
+		if (algo->canEatThreat(board)) {
 			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
 			suggestedMove = algo->getSuggestedMoves();
 			suggestedLocation = algo->getSuggestedLocation();
-
-			cout << "Computer is moving " << suggestedMove->getDice()->getValue() << " from " << 8-suggestedMove->getRow() << "," << suggestedMove->getColumn()+1
-				<< " to " << (8 - suggestedLocation->getRow()) << "," << suggestedLocation->getColumn()+1
-				<< " to clean up the mess by opponent" << endl;
+			
+			printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
+			cout << "Mess is cleaned up" << endl;
 			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+			return d;
 		}
-		else {
-			// Move the king
-			algo->canMoveKing(board);
+		else if (algo->canMoveKing(board, true)) {
+			// Try to move the king to escape.
+			suggestedMove = algo->getSuggestedMoves();
+			suggestedLocation = algo->getSuggestedLocation();
+			printMove(8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, true);
+			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
+			return d;
 		}
 	}
 
-	
-
-	// If it is defended, see if you can attack.
+	// If there is no threat for the king, see if you can attack and eat other team.
 
 	// If nothing is attackable, do best first search.
 

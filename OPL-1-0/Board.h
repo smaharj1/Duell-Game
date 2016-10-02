@@ -22,6 +22,7 @@ public:
 	bool isLegal(int row, int column, int newRow, int newCol, bool isComputer);
 	bool isPathGood(int row, int col, int newRow, int newCol, bool correctPaths[]);
 	bool checkPathForAlgo(int row, int col, int newRow, int newCol, bool isGodMode);
+	bool isLegalAlgo(int row, int column, int newRow, int newCol, bool isComputer);
 	Dice * moveFromAlgo(int row, int col, int newRow, int newCol);
 
 	void setBoard(string tempBoard[][9]);
