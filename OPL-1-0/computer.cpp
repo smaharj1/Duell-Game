@@ -51,13 +51,13 @@ computer::~computer()
 }
 
 Dice * computer::play(Board * board) {
-	algorithm * algo = new algorithm();
+	algorithm * algo = new algorithm(board, true);
 	treeNode * suggestedMove;
 	location * suggestedLocation;
 
 	// Defend the king first.
-	if (algo->kingInThreat(board, true)) {
-		if (algo->canEat(board, true)) {
+	if (algo->kingInThreat(board)) {
+		if (algo->canEat(board)) {
 			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
 			suggestedMove = algo->getSuggestedMoves();
 			suggestedLocation = algo->getSuggestedLocation();
@@ -69,7 +69,7 @@ Dice * computer::play(Board * board) {
 		}
 		else {
 			// Move the king
-			algo->canMoveKing(board, true);
+			algo->canMoveKing(board);
 		}
 	}
 

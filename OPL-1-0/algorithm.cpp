@@ -4,11 +4,14 @@ algorithm::algorithm()
 {
 }
 
+algorithm::algorithm(Board * board, bool isComputer) {
+	refreshPlayers(board, isComputer);
+}
 bool algorithm::goDefence(Board * board, bool isComputer) {
 	// Check for imminent threat by other player.
-	if (kingInThreat(board, isComputer)) {
+	if (kingInThreat(board)) {
 		// Move the king if there is an imminent threat
-		if (canEat(board, isComputer) ) {
+		if (canEat(board) ) {
 			return true;
 		}
 		else return false;
@@ -20,13 +23,41 @@ bool algorithm::goDefence(Board * board, bool isComputer) {
 	return false;
 }
 
-bool algorithm::canMoveKing(Board * board, bool isComputer) {
+bool algorithm::canMoveKing(Board * board) {
+	treeNode * playerKing;
+	
+	for (int i = 0; i < currentPlayer.size(); i++) {
+		if (currentPlayer[i]->getDice()->isPlayerKing()) {
+			playerKing = currentPlayer[i];
+		}
+	}
+	
 
 	return true;
 }
 
+treeNode * algorithm::getCurrentPlayersKing() {
+	for (int i = 0; i < currentPlayer.size(); i++) {
+		if (currentPlayer[i]->getDice()->isPlayerKing()) {
+			return currentPlayer[i];
+		}
+	}
 
-bool algorithm::canEat(Board * board, bool isComputer) {
+	return NULL;
+}
+
+treeNode * algorithm::getOpponentsKing() {
+
+	for (int i = 0; i < opponentPlayer.size(); i++) {
+		if (opponentPlayer[i]->getDice()->isPlayerKing()) {
+			return opponentPlayer[i];
+		}
+	}
+
+	return NULL;
+}
+
+bool algorithm::canEat(Board * board) {
 	if (threateningNode == NULL) {
 		return false;
 	}
@@ -48,11 +79,9 @@ bool algorithm::canEat(Board * board, bool isComputer) {
 	return false;
 }
 
-bool algorithm::kingInThreat(Board * board, bool isComputer) {
+bool algorithm::kingInThreat(Board * board) {
 	treeNode * playerKing;
 
-	refreshPlayers(board, isComputer);
-	
 	for (int i = 0; i < currentPlayer.size(); i++) {
 		if (currentPlayer[i]->getDice()->isPlayerKing()) {
 			playerKing = currentPlayer[i];
