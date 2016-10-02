@@ -15,7 +15,8 @@ game::game()
 
 	boardView.setBoard(board);
 
-	isComputersTurn = false;
+	determineTurn();
+
 	isDone = false;
 	computerWin = true;
 
@@ -37,6 +38,42 @@ game::game(Board * tempBoard, bool computersTurn) {
 
 game::~game()
 {
+}
+
+void game::determineTurn() {
+	srand(time(NULL));
+	bool humanTurn = true;
+	char userInput;
+	int humanDie = 0; int computerDie = 0;
+
+	while (humanDie == computerDie) {
+		cout << "Please enter any key to toss a die: ";
+		cin >> userInput;
+
+		humanDie = rollDie();
+		cout << "You rolled " << humanDie << endl;
+
+		computerDie = rollDie();
+		cout << "Computer rolled " << computerDie << endl;	
+
+		if (humanDie == computerDie) {
+			cout << "It is a draw. Repeat the roll." << endl;
+		}
+	}
+
+	if (computerDie > humanDie) {
+		cout << "Computer goes first!" << endl;
+		isComputersTurn = true;
+	}
+	else {
+		cout << "You go first!" << endl;
+		isComputersTurn = false;
+	}
+
+}
+
+int game::rollDie() {
+	return rand() % 6 + 1;
 }
 
 bool game::isComputerWinner() {

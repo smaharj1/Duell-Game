@@ -8,6 +8,7 @@
 #include "computer.h"
 #include<fstream>
 #include"FileHandler.h"
+#include<time.h>
 
 using namespace std;
 
@@ -40,6 +41,8 @@ private:
 	void printMove(int row, int col, int newRow, int newCol, bool isComputer);
 	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
 	bool isPathLegal(int row, int col, int newRow, int newCol, bool correctPaths[]);
+	void determineTurn();
+	int rollDie();
 
 	const int MAX_ROW = 9;
 
