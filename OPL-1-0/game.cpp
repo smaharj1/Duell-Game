@@ -79,7 +79,7 @@ int game::rollDie() {
 bool game::isComputerWinner() {
 
 	//TODO: needs changes
-	return false;
+	return computerWin;
 }
 
 // this will update if the game is finished or it is just saved.

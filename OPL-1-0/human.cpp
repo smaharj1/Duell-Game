@@ -66,7 +66,7 @@ void human::askForHelp(Board * board) {
 		suggestedLocation = algo.getSuggestedLocation();
 
 		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanWin);
-		
+		return;
 	}
 
 	// Defend the king first.
@@ -76,15 +76,15 @@ void human::askForHelp(Board * board) {
 			suggestedMove = algo.getSuggestedMoves();
 			suggestedLocation = algo.getSuggestedLocation();
 			printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatKingsThreat);
-			
+			return;
 			
 		}
-		else if (algo.canMoveKing(true)) {
+		else if (algo.canMoveKing(false)) {
 			// Try to move the king to escape.
 			suggestedMove = algo.getSuggestedMoves();
 			suggestedLocation = algo.getSuggestedLocation();
 			printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::MoveKing);
-			
+			return;
 		}
 	}
 
@@ -93,7 +93,7 @@ void human::askForHelp(Board * board) {
 		suggestedMove = algo.getSuggestedMoves();
 		suggestedLocation = algo.getSuggestedLocation();
 		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatOpponent);
-		
+		return;
 	}
 
 	// If nothing is attackable, move the dice closest to opponent where opponent can't eat.
@@ -101,7 +101,7 @@ void human::askForHelp(Board * board) {
 		suggestedMove = algo.getSuggestedMoves();
 		suggestedLocation = algo.getSuggestedLocation();
 		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::PlaySafe);
-		
+		return;
 	}
 
 }
