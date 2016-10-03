@@ -44,8 +44,10 @@ void tournament::startGame() {
 		else {
 			Board * tempBoard = new Board();
 			bool isComputersTurn;
-			string filename = inputFile();
-			fileFunction->openGame(filename, tempBoard, isComputersTurn, computerScore, humanScore);
+			string filename;
+			do {
+				filename = inputFile();
+			} while (!fileFunction->openGame(filename, tempBoard, isComputersTurn, computerScore, humanScore));
 
 			newGame = new game(tempBoard, isComputersTurn);
 		}
