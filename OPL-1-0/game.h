@@ -38,15 +38,12 @@ private:
 	bool isComputersTurn;
 	bool isDone;
 	bool computerWin;
-	char userInput;
+	char userInputForSaving;
 	
 
 	player * humanP;
 	player * bot;
 
-	void printMove(int row, int col, int newRow, int newCol, bool isComputer);
-	bool isMoveLegal(int row, int col, int newRow, int newCol, bool isComputer);
-	bool isPathLegal(int row, int col, int newRow, int newCol, bool correctPaths[]);
 	void determineTurn();
 	int rollDie();
 
