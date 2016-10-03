@@ -50,7 +50,7 @@ computer::~computer()
 {
 }
 
-void computer::printIt(Dice * givenDice, int row, int column, int newRow, int newCol, GameCondition condition) {
+void computer::printMove(Dice * givenDice, int row, int column, int newRow, int newCol, GameCondition condition) {
 	cout << "The computer picked " << givenDice->getValue() << " because ";
 
 	switch (condition) {
@@ -91,57 +91,57 @@ void computer::printIt(Dice * givenDice, int row, int column, int newRow, int ne
 
 
 Dice * computer::play(Board * board) {
-	algorithm * algo = new algorithm(board, true);
+	algorithm algo(board, true);
 	treeNode * suggestedMove;
 	location * suggestedLocation;
 
 	// First, check if the bot can win.
-	if (algo->canWin()) {
-		suggestedMove = algo->getSuggestedMoves();
-		suggestedLocation = algo->getSuggestedLocation();
+	if (algo.canWin()) {
+		suggestedMove = algo.getSuggestedMoves();
+		suggestedLocation = algo.getSuggestedLocation();
 
-		printIt(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanWin);
+		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanWin);
 		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 		return d;
 	}
 
 	// Defend the king first.
-	if (algo->kingInThreat()) {
-		if (algo->canEatThreat()) {
+	if (algo.kingInThreat()) {
+		if (algo.canEatThreat()) {
 			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
-			suggestedMove = algo->getSuggestedMoves();
-			suggestedLocation = algo->getSuggestedLocation();
+			suggestedMove = algo.getSuggestedMoves();
+			suggestedLocation = algo.getSuggestedLocation();
 			
-			printIt(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatKingsThreat);
+			printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatKingsThreat);
 			cout << "Mess is cleaned up" << endl;
 			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 			return d;
 		}
-		else if (algo->canMoveKing(true)) {
+		else if (algo.canMoveKing(true)) {
 			// Try to move the king to escape.
-			suggestedMove = algo->getSuggestedMoves();
-			suggestedLocation = algo->getSuggestedLocation();
-			printIt(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::MoveKing);
+			suggestedMove = algo.getSuggestedMoves();
+			suggestedLocation = algo.getSuggestedLocation();
+			printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::MoveKing);
 			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 			return d;
 		}
 	}
 
 	// If the king does not have any threat, try to eat other players
-	if (algo->canEatOpponent()) {
-		suggestedMove = algo->getSuggestedMoves();
-		suggestedLocation = algo->getSuggestedLocation();
+	if (algo.canEatOpponent()) {
+		suggestedMove = algo.getSuggestedMoves();
+		suggestedLocation = algo.getSuggestedLocation();
 		cout << "-------How do you like them apples?---------" << endl;
-		printIt(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatOpponent);
+		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::CanEatOpponent);
 		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 		return d;
 	}
 
 	// If nothing is attackable, move the dice closest to opponent where opponent can't eat.
-	if (algo->safeOffense()) {
-		suggestedMove = algo->getSuggestedMoves();
-		suggestedLocation = algo->getSuggestedLocation();
-		printIt(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::PlaySafe);
+	if (algo.safeOffense()) {
+		suggestedMove = algo.getSuggestedMoves();
+		suggestedLocation = algo.getSuggestedLocation();
+		printMove(suggestedMove->getDice(), 8 - suggestedMove->getRow(), suggestedMove->getColumn() + 1, 8 - suggestedLocation->getRow(), suggestedLocation->getColumn() + 1, GameCondition::PlaySafe);
 		Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 		return d;
 	}

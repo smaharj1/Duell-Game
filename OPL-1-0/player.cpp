@@ -38,7 +38,7 @@ int player::isMoveInBound(int r, int c, int newR, int newC) {
 	return true;
 }
 
-void player::printMove(int row, int column, int newRow, int newCol, bool isComputer, int direction) {
+void player::printActivity(int row, int column, int newRow, int newCol, bool isComputer, int direction) {
 	cout << "--------------------------------------------------------------" << endl;
 	if (isComputer) {
 		cout << "Computer ";

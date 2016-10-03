@@ -232,6 +232,20 @@ bool algorithm::safeOffense() {
 			}
 		}
 	}
+	else {
+		for (int row = 0; row < board->getTotalRows(); row++) {
+			for (int col = 0; col < board->getTotalColumns(); col++) {
+				// Check if any opponent player nodes can reach this location. 
+				// If yes, then move on. If no, then check if current player can move their dice to this location.
+				if (!canReachLocation(opponentPlayer, row, col)) {
+					if (canReachLocation(currentPlayer, row, col)) {
+						// At this point, the suggested move and location will already have been set.
+						return true;
+					}
+				}
+			}
+		}
+	}
 
 	return false;
 }
