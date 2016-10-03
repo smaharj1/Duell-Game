@@ -13,7 +13,7 @@ using namespace std;
 class human : public player
 {
 public:
-	human();
+
 	human(int keys[], int size);
 	human(Board * board);
 	~human();
