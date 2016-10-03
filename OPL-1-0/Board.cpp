@@ -268,7 +268,7 @@ Dice * Board::move(int row, int column, int newRow, int newCol, char direction) 
 		diceAte = board[newRow - 1][newCol - 1]->getDice();
 		board[newRow - 1][newCol - 1]->removeDice();
 	}
-	board[newRow-1][newCol-1]->addDice(board[row - 1][column - 1]->getDice());
+	board[newRow-1][newCol-1]->setDice(board[row - 1][column - 1]->getDice());
 	board[row - 1][column - 1]->removeDice();
 
 	return diceAte;

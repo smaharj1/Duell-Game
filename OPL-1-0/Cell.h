@@ -13,9 +13,9 @@ class Cell
 public:
 	Cell();
 	~Cell();
-	Cell(Dice * d);
+	Cell(Dice * givenDice);
 
-	void addDice(Dice * givenDice);
+	bool setDice(Dice * givenDice);
 	bool isEmpty();
 
 	Dice * getDice();
