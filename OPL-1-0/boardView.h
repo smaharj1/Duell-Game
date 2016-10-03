@@ -14,9 +14,7 @@ public:
 	BoardView();
 	~BoardView();
 
-	void setBoard(Board * b) {
-		board = b;
-	}
+	bool setBoard(Board * givenBoard);
 
 	void printBoard();
 
