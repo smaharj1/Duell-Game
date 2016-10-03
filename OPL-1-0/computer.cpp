@@ -123,7 +123,7 @@ Dice * computer::play(Board * board) {
 			Dice * d = board->moveFromAlgo(suggestedMove->getRow(), suggestedMove->getColumn(), suggestedLocation->getRow(), suggestedLocation->getColumn());
 			return d;
 		}
-		else if (algo.canMoveKing(true)) {
+		else if (algo.canMoveKing()) {
 			// Try to move the king to escape.
 			suggestedMove = algo.getSuggestedMoves();
 			suggestedLocation = algo.getSuggestedLocation();

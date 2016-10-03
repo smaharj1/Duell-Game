@@ -14,12 +14,11 @@
 class algorithm
 {
 public:
-	algorithm();
 	algorithm(Board * board, bool isComputer);
 
 	void refreshPlayers( bool isComputer);
 	bool canEatThreat();
-	bool canMoveKing(bool isComputer);
+	bool canMoveKing();
 	bool kingInThreat();
 	bool canEatOpponent();
 
@@ -36,16 +35,18 @@ public:
 private:
 	treeNode * getCurrentPlayersKing();
 	treeNode * getOpponentsKing();
+	void nullifySuggestions();
 
 	Board * board;
 
 	treeNode * threateningNode;
 	treeNode * suggestedMove;
 	location * suggestedNewLocation;
+	bool algoForComputer;
 
 	vector<treeNode *> currentPlayer;
 	vector<treeNode *> opponentPlayer;
 
-	bool algoForComputer;
+	
 
 };

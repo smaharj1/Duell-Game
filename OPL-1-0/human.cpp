@@ -85,7 +85,7 @@ void human::askForHelp(Board * board) {
 			return;
 			
 		}
-		else if (algo.canMoveKing(false)) {
+		else if (algo.canMoveKing()) {
 			// Try to move the king to escape.
 			suggestedMove = algo.getSuggestedMoves();
 			suggestedLocation = algo.getSuggestedLocation();

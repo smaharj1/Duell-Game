@@ -6,18 +6,42 @@
 ************************************************************/
 #include"algorithm.h"
 
-algorithm::algorithm()
-{
-}
-
 algorithm::algorithm(Board * board, bool isComputer) {
 	this->board = board;
 	refreshPlayers(isComputer);
 	algoForComputer = isComputer;
+
+	nullifySuggestions();
+	threateningNode = NULL;
 }
 
+void algorithm::nullifySuggestions() {
+	
+	suggestedMove = NULL;
+	suggestedNewLocation = NULL;
+}
 
-bool algorithm::canMoveKing( bool isComputer) {
+void algorithm::refreshPlayers(bool isComputer) {
+	opponentPlayer.clear();
+	currentPlayer.clear();
+
+	for (int row = 0; row < board->getTotalRows(); row++) {
+		for (int col = 0; col < board->getTotalColumns(); col++) {
+			if (!board->getCell(row, col)->isEmpty()) {
+				Dice * d = board->getCell(row, col)->getDice();
+
+				if (d->isPlayerComputer() != isComputer) {
+					opponentPlayer.push_back(new treeNode(d, row, col));
+				}
+				else {
+					currentPlayer.push_back(new treeNode(d, row, col));
+				}
+			}
+		}
+	}
+}
+
+bool algorithm::canMoveKing() {
 	treeNode * playerKing = getCurrentPlayersKing();
 	
 	int front = playerKing->getRow()+1;
@@ -30,7 +54,7 @@ bool algorithm::canMoveKing( bool isComputer) {
 
 	// For frontal move of king.
 	if (front < board->getTotalRows() && front >= 0) {
-		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), front, playerKing->getColumn(), isComputer)) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), front, playerKing->getColumn(), algoForComputer)) {
 			suggestedMove = playerKing;
 			suggestedNewLocation = new location(front, playerKing->getColumn());
 			return true;
@@ -38,7 +62,7 @@ bool algorithm::canMoveKing( bool isComputer) {
 	}
 	
 	if (back < board->getTotalRows() && back >= 0) {
-		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), back, playerKing->getColumn(), isComputer)) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), back, playerKing->getColumn(), algoForComputer)) {
 			suggestedMove = playerKing;
 			suggestedNewLocation = new location(back, playerKing->getColumn());
 			return true;
@@ -46,7 +70,7 @@ bool algorithm::canMoveKing( bool isComputer) {
 	}
 
 	if (left < board->getTotalColumns() && left >= 0) {
-		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), left, isComputer)) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), left, algoForComputer)) {
 			suggestedMove = playerKing;
 			suggestedNewLocation = new location(playerKing->getRow(), left);
 			return true;
@@ -54,7 +78,7 @@ bool algorithm::canMoveKing( bool isComputer) {
 	}
 
 	if (right < board->getTotalColumns() && right>= 0) {
-		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), right, isComputer)) {
+		if (board->isLegalAlgo(playerKing->getRow(), playerKing->getColumn(), playerKing->getRow(), right, algoForComputer)) {
 			suggestedMove = playerKing;
 			suggestedNewLocation = new location(playerKing->getRow(), right);
 			return true;
@@ -124,25 +148,7 @@ bool algorithm::kingInThreat() {
 	return false;
 }
 
-void algorithm::refreshPlayers( bool isComputer) {
-	opponentPlayer.clear();
-	currentPlayer.clear();
 
-	for (int row = 0; row < board->getTotalRows(); row++) {
-		for (int col = 0; col < board->getTotalColumns(); col++) {
-			if (!board->getCell(row, col)->isEmpty()) {
-				Dice * d = board->getCell(row, col)->getDice();
-				
-				if (d->isPlayerComputer() != isComputer) {
-					opponentPlayer.push_back(new treeNode(d, row, col));
-				}
-				else {
-					currentPlayer.push_back(new treeNode(d, row, col));
-				}
-			}
-		}
-	}
-}
 
 bool algorithm::canWin() {
 	treeNode * opponentKing = getOpponentsKing();
