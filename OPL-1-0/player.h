@@ -39,6 +39,8 @@ protected:
 	const int COLUMN_LOW_LIMIT = 1;
 	const int COLUMN_HIGH_LIMIT = 9;
 
+	const int FRONT_FACE = 3;
+
 	enum GameCondition {
 		CanWin,
 		CanEatKingsThreat,
