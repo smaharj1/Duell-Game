@@ -112,7 +112,7 @@ Dice * computer::play(Board * board) {
 	}
 
 	// Defend the king first.
-	if (algo.kingInThreat()) {
+	if (algo.isKingInThreat()) {
 		if (algo.canEatThreat()) {
 			cout << "You tried to eat my king huh? Smart!" << endl << "Just kidding! This is for you, love! Rest In Peace!" << endl << endl;
 			suggestedMove = algo.getSuggestedMoves();

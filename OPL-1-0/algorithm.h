@@ -16,10 +16,10 @@ class algorithm
 public:
 	algorithm(Board * board, bool isComputer);
 
-	void refreshPlayers( bool isComputer);
+	void refreshPlayers();
 	bool canEatThreat();
 	bool canMoveKing();
-	bool kingInThreat();
+	bool isKingInThreat();
 	bool canEatOpponent();
 
 	bool canWin();
@@ -31,6 +31,7 @@ public:
 	treeNode * getSuggestedMoves() { return suggestedMove; }
 	location * getSuggestedLocation() { return suggestedNewLocation; }
 
+	bool isAlgoForComputer() { return algoForComputer; }
 
 private:
 	treeNode * getCurrentPlayersKing();
@@ -46,7 +47,4 @@ private:
 
 	vector<treeNode *> currentPlayer;
 	vector<treeNode *> opponentPlayer;
-
-	
-
 };

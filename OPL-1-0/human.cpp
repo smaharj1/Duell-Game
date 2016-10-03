@@ -76,7 +76,7 @@ void human::askForHelp(Board * board) {
 	}
 
 	// Defend the king first.
-	if (algo.kingInThreat()) {
+	if (algo.isKingInThreat()) {
 		if (algo.canEatThreat()) {
 			
 			suggestedMove = algo.getSuggestedMoves();
