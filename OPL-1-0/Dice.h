@@ -23,18 +23,16 @@ public:
 	void moveForward();
 	void moveBackward();
 
-	void setValue(string val);
 	string getValue();
 
-	int getTop();
-	int getRight();
+	int getTop() { return top; }
+	int getRight() { return right; }
+	int getFront() { return front; }
 
 	static int computeFrontFace(int top, int right);
-	void setAsKing(string val);
 
-	bool isPlayerKing();
-
-	bool isPlayerComputer();
+	bool isPlayerKing() { return isKing; }
+	bool isPlayerComputer() { return isComputer; }
 	bool setKing();
 
 	bool setKilled();
@@ -46,8 +44,5 @@ private:
 	int right;
 	int front;
 	bool isKilled;
-
-	const int DICE_FRONT = 3;
-
 };
 
