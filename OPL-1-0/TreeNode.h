@@ -12,7 +12,7 @@
 class treeNode
 {
 public:
-	treeNode();
+	
 	treeNode(Dice * d, int row, int col);
 	~treeNode();
 

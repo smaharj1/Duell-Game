@@ -7,7 +7,20 @@
 #include "player.h"
 
 
+/* *********************************************************************
+Function Name: isMoveInBound
+Purpose: Default constructor
 
+Parameters:
+
+Return Value: 
+
+Local Variables: none.
+
+Algorithm: none.
+
+Assistance Received: none
+********************************************************************* */
 player::player()
 {
 }

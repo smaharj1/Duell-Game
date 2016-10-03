@@ -6,17 +6,41 @@
 ************************************************************/
 #include "TreeNode.h"
 
-treeNode::treeNode()
-{
-}
 
+/* *********************************************************************
+Function Name: treeNode
+Purpose: Default constructor
+
+Parameters: none.
+
+Return Value: none.
+
+Local Variables: none.
+
+Algorithm: none.
+
+Assistance Received: none
+********************************************************************* */
 treeNode::treeNode(Dice * d, int row, int col) {
 	currentDice = d;
 	currentLocation = new location(row, col);
 	previousNode = NULL;
 }
 
+/* *********************************************************************
+Function Name: treeNode
+Purpose: Destructor
 
+Parameters: none.
+
+Return Value: none.
+
+Local Variables: none.
+
+Algorithm: none.
+
+Assistance Received: none
+********************************************************************* */
 treeNode::~treeNode()
 {
 }
