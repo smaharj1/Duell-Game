@@ -7,11 +7,26 @@
 #include "location.h"
 
 
+/* *********************************************************************
+Function Name: location
+Purpose: Constructor.
 
-location::location(int r, int c)
+Parameters: 
+	givenRow, an integer. It holds the row number.
+	givenCol, an integer. It holds the column number.
+
+Return Value:  none.
+
+Local Variables: none.
+
+Algorithm: none.
+
+Assistance Received: none
+********************************************************************* */
+location::location(int givenRow, int givenCol)
 {
-	row = r;
-	col = c;
+	row = givenRow;
+	col = givenCol;
 }
 
 

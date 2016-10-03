@@ -8,7 +8,7 @@
 class location
 {
 public:
-	location();
+
 	location(int r, int c);
 	~location();
 
