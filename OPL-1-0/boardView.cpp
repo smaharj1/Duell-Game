@@ -7,7 +7,20 @@
 #include "boardView.h"
 
 
+/* *********************************************************************
+Function Name:
+Purpose:
 
+Parameters:
+
+Return Value:
+
+Local Variables:
+
+Algorithm:
+
+Assistance Received: none
+********************************************************************* */
 BoardView::BoardView()
 {
 }

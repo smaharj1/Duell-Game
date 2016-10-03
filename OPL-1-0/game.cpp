@@ -17,7 +17,7 @@ game::game()
 	humanP = new human(given, SIZE);
 	bot = new computer(given, SIZE);
 
-	board = new Board(humanP->getDices(), bot->getDices(), SIZE);
+	board = new Board(humanP->getDices(), bot->getDices());
 
 	boardView.setBoard(board);
 

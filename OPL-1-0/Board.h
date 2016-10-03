@@ -9,13 +9,11 @@
 #include"Dice.h"
 #include"Cell.h"
 
-
-
 class Board
 {
 public:
 	Board();
-	Board(Dice ** human, Dice ** bot, int size);
+	Board(Dice ** human, Dice ** bot);
 	~Board();
 	
 	int getTotalRows() { return ROWS; }
@@ -31,8 +29,9 @@ public:
 	bool isLegalAlgo(int row, int column, int newRow, int newCol, bool isComputer);
 	Dice * moveFromAlgo(int row, int col, int newRow, int newCol);
 
-	void setBoard(string tempBoard[][9]);
+	bool setBoard(string tempBoard[][9]);
 	bool setGodMode(bool given);
+	bool getIfGodMode() { return isGodMode; }
 
 private:
 	Cell * board[8][9];
@@ -45,7 +44,7 @@ private:
 	const int COLUMN_LOW_LIMIT = 1;
 	const int COLUMN_HIGH_LIMIT = 9;
 
-	bool godMode;
+	bool isGodMode;
 
 };
 
