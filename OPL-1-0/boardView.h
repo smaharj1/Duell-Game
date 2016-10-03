@@ -8,14 +8,20 @@
 #include<iostream>
 #include"Board.h"
 
+/*
+	This is the view of the board.
+*/
 class BoardView
 {
 public:
+	// Default constructor.
 	BoardView();
 	~BoardView();
 
+	// Sets the board for display.
 	bool setBoard(Board * givenBoard);
 
+	// Prints the board.
 	void printBoard();
 
 private:
