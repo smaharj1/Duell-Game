@@ -164,10 +164,10 @@ void computer::printMove(Dice * givenDice, int row, int column, int newRow, int 
 
 	int side = newCol - column;
 	if (side < 0) {
-		cout << "It moved left by " << abs(side) << " because it led to the current situation. " << endl;
+		cout << "It moved right by " << abs(side) << " because it led to the current situation. " << endl;
 	}
 	else if (side >0) {
-		cout << "It moved right by " << abs(side) << " because it led to the current situation. " << endl;
+		cout << "It moved left by " << abs(side) << " because it led to the current situation. " << endl;
 	}
 
 }

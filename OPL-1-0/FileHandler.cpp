@@ -187,7 +187,7 @@ bool FileHandler::openGame(string filename, Board * tempBoard, bool &isComputers
 
 			switch(lineIndex) {
 			case 11: // This determines the turn of player.
-				isComputersTurn = tmp.at(tmp.size() - 1) == "human" ? false : true;
+				isComputersTurn = tmp.at(tmp.size() - 1) == "Human" ? false : true;
 				break;
 			case 9: // This determines total games won by computer
 				computerScore = stoi(tmp.at(tmp.size() - 1));

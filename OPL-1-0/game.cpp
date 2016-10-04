@@ -223,16 +223,16 @@ bool game::startGame() {
 		// Prints the board first.
 		boardView.printBoard();
 
-		/*
+		//char userInputForSaving;
 		// Prompt the user if they want to keep playing
 		cout << "Do you want to keep playing or save the game? (S for save/ any for keep playing):: ";
 		cin >> userInputForSaving;
 
-		userInputForSaving = tolower(userInputForSharing
-		if (userInputForSharing == 's') {
+		userInputForSaving = tolower(userInputForSaving);
+		if (userInputForSaving == 's') {
 			return false;
 		}
-		*/
+		
 
 		if (!isComputersTurn) {
 			// Let human play the game.
@@ -247,11 +247,25 @@ bool game::startGame() {
 					cout << "####-----------------####--------------------####" << endl;
 					cout << "YOU WON!!!!!!!!!!!!" << endl;
 					cout << "Go brag about it! You won the computer!" << endl << endl;
+					boardView.printBoard();
 				}
 				else {
 					returnedDice->setKilled();
 				}
 			}
+			/*
+			else if (!board->getCell(0, 4)->isEmpty()) {
+				cout << "Not empty" << endl;
+				if (!board->getCell(0, 4)->getDice()->isPlayerComputer()) {
+					isDone = true;
+					computerWin = false;
+					cout << "####-----------------####--------------------####" << endl;
+					cout << "YOU WON!!!!!!!!!!!!" << endl;
+					cout << "Go brag about it! You won the computer!" << endl << endl;
+					boardView.printBoard();
+				}
+			}
+			*/
 		}
 		else {
 			cout << "It is computer's turn." << endl;
@@ -266,11 +280,23 @@ bool game::startGame() {
 					cout << "####-----------------####--------------------####" << endl;
 					cout << "Computer WON!!!!!!!!!!!!" << endl;
 					cout << "Sorry! Better be smart first" << endl << endl;
+					boardView.printBoard();
 				}
 				else {
 					returnedDice->setKilled();
 				}
 			}
+			/*
+			else if (!board->getCell(7, 4)->isEmpty()) {
+				if (!board->getCell(7, 4)->getDice()->isPlayerComputer()) {
+					isDone = true;
+					computerWin = true;
+					cout << "####-----------------####--------------------####" << endl;
+					cout << "Computer WON!!!!!!!!!!!!" << endl;
+					cout << "Sorry! Better be smart first" << endl << endl;
+					boardView.printBoard();
+				}
+			}*/
 
 		}
 

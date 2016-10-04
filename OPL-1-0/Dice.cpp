@@ -34,6 +34,7 @@ Dice::Dice(string given)
 	else {
 		// Computes the front.
 		front = computeFrontFace(top, right);
+		isKing = false;
 	}
 
 	// Sets if it is a computer.

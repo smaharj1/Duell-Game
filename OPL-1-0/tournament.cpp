@@ -94,7 +94,7 @@ Assistance Received: none
 void tournament::startGame() {
 	// Asks the user if they want to start a new game.
 	char userInput;
-	cout << "Do you want to start a new game (Y/N) or open existing (O)? :: " << endl;
+	cout << "Do you want to start a new game (Y) or open existing (O)? :: " << endl;
 	cin >> userInput;
 
 	// Declares a pointer that will point to a new game.
@@ -143,14 +143,16 @@ void tournament::startGame() {
 			fileFunction->saveGame(filename, newGame->getBoard(), newGame->getIfComputerTurn(), computerScore, humanScore);
 		}
 
-		// Prompts the user if they want to start a new game.
-		cout << "----Do you want to play another game (Y/N)? :: " << endl;
-		cin >> userInput;
+		do {
+			// Prompts the user if they want to start a new game.
+			cout << "----Do you want to play another game (Y/N)? :: " << endl;
+			cin >> userInput;
 
-		userInput = tolower(userInput);
-		if (userInput == 'n') {
-			printScore();
-		}
+			userInput = tolower(userInput);
+			if (userInput == 'n') {
+				printScore();
+			}
+		} while (userInput != 'y' && userInput != 'n');
 	}
 }
 
