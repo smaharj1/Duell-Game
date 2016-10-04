@@ -13,7 +13,6 @@
 using namespace std;
 
 int main() {
-	cout << "Hello world" << endl;
 
 	tournament t;
 
