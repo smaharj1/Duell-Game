@@ -109,7 +109,7 @@ Assistance Received: none
 ********************************************************************* */
 human::~human()
 {
-
+	delete humanDices;
 }
 
 /* *********************************************************************
@@ -203,8 +203,11 @@ Assistance Received: none
 ********************************************************************* */
 char askIfHelpNeeded() {
 	char userInput;
-	cout << "Would you like some help (Y for yes, anything else for No)? ";
-	cin >> userInput;
+	do {
+		cout << "Would you like some help (Y for yes, N for No)? ";
+		cin >> userInput;
+		userInput = tolower(userInput);
+	} while (userInput !='y' && userInput != 'n');
 
 	return tolower(userInput);
 }

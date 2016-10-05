@@ -20,6 +20,8 @@ public:
 	// Constructor for the class.
 	algorithm(Board * board, bool isComputer);
 
+	~algorithm();
+
 	// Refreshes the suggestions from the algorithm to make the movements.
 	void refreshPlayers();
 

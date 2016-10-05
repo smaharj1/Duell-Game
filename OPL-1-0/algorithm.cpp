@@ -44,6 +44,27 @@ Return Value: None.
 Local Variables: none.
 
 Algorithm:
+1) Sets suggested moves to null.
+
+Assistance Received: none
+********************************************************************* */
+algorithm::~algorithm() {
+	delete threateningNode;
+	delete suggestedMove;
+	delete suggestedNewLocation;
+
+}
+/* *********************************************************************
+Function Name: nullifySuggestions
+Purpose: To reset the values of suggested moves that are stored as class variables.
+
+Parameters: None.
+
+Return Value: None.
+
+Local Variables: none.
+
+Algorithm:
 	1) Sets suggested moves to null.
 
 Assistance Received: none

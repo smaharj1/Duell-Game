@@ -108,6 +108,7 @@ Assistance Received: none
 ********************************************************************* */
 computer::~computer()
 {
+	delete computerDices;
 }
 
 /* *********************************************************************
@@ -132,7 +133,7 @@ Algorithm: none.
 Assistance Received: none
 ********************************************************************* */
 void computer::printMove(Dice * givenDice, int row, int column, int newRow, int newCol, GameCondition condition) {
-	cout << "The computer picked " << givenDice->getValue() << " because ";
+	cout << "The computer picked " << givenDice->getValue() << " at (" << row << "," << column << ") to (" << newRow << "," << newCol << ") roll because ";
 
 	// Checks the condition of movement chosen by computer and gives explanation accordingly.
 	switch (condition) {

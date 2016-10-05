@@ -96,6 +96,10 @@ Assistance Received: none
 ********************************************************************* */
 game::~game()
 {
+	delete board;
+	delete humanP;
+	delete bot;
+	
 }
 
 /* *********************************************************************
@@ -129,9 +133,13 @@ void game::determineTurn() {
 
 	// Keep rolling the dies until its draw.
 	while (humanDie == computerDie) {
-		// Ask user to toss the die.
-		cout << "Please enter any key to toss a die: ";
-		cin >> userInput;
+
+		do {
+			// Ask user to toss the die.
+			cout << "Please enter R any key to toss a die: ";
+			cin >> userInput;
+			userInput = tolower(userInput);
+		} while (userInput != 'r');
 
 		humanDie = rollDie();
 		cout << "You rolled " << humanDie << endl;
@@ -225,13 +233,15 @@ bool game::startGame() {
 
 		//char userInputForSaving;
 		// Prompt the user if they want to keep playing
-		cout << "Do you want to keep playing or save the game? (S for save/ any for keep playing):: ";
-		cin >> userInputForSaving;
+		do {
+			cout << "Do you want to keep playing or save the game? (S for save/ P for keep playing):: ";
+			cin >> userInputForSaving;
 
-		userInputForSaving = tolower(userInputForSaving);
-		if (userInputForSaving == 's') {
-			return false;
-		}
+			userInputForSaving = tolower(userInputForSaving);
+			if (userInputForSaving == 's') {
+				return false;
+			}
+		} while (userInputForSaving != 'p' && userInputForSaving != 's');
 		
 
 		if (!isComputersTurn) {
@@ -253,19 +263,7 @@ bool game::startGame() {
 					returnedDice->setKilled();
 				}
 			}
-			/*
-			else if (!board->getCell(0, 4)->isEmpty()) {
-				cout << "Not empty" << endl;
-				if (!board->getCell(0, 4)->getDice()->isPlayerComputer()) {
-					isDone = true;
-					computerWin = false;
-					cout << "####-----------------####--------------------####" << endl;
-					cout << "YOU WON!!!!!!!!!!!!" << endl;
-					cout << "Go brag about it! You won the computer!" << endl << endl;
-					boardView.printBoard();
-				}
-			}
-			*/
+			
 		}
 		else {
 			cout << "It is computer's turn." << endl;
@@ -286,18 +284,6 @@ bool game::startGame() {
 					returnedDice->setKilled();
 				}
 			}
-			/*
-			else if (!board->getCell(7, 4)->isEmpty()) {
-				if (!board->getCell(7, 4)->getDice()->isPlayerComputer()) {
-					isDone = true;
-					computerWin = true;
-					cout << "####-----------------####--------------------####" << endl;
-					cout << "Computer WON!!!!!!!!!!!!" << endl;
-					cout << "Sorry! Better be smart first" << endl << endl;
-					boardView.printBoard();
-				}
-			}*/
-
 		}
 
 		
